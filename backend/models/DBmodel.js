@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
       trim: true,
     },
     bookmarks: {
-      type: [String], // or [ObjectId] if referencing
+      type: [Object], // or [ObjectId] if referencing
       default: []
     },
     cpProfiles: {

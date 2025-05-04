@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import {authrouter} from './routes/authrouter.js'
 import { leetcodeRouter } from './routes/leetcodeRouter.js';
 import './models/database.js'
+import { updateBookmark } from './controller/BookmarkController.js';
 dotenv.config()
 
 
@@ -39,7 +40,7 @@ app.use(cookieParser())
 // app.use('/leetcode',router)
 app.use('/auth',authrouter)
 app.use('/leetcode',leetcodeRouter)
-
+app.use('/bookmarks',updateBookmark)
 app.listen(PORT, () => {
     console.log(`✅ Proxy server running at http://localhost:${PORT}`);
 });

@@ -1,63 +1,72 @@
-import React,{useContext,createContext, useState, useEffect} from 'react'
+import React, { useContext, createContext, useState, useEffect, useCallback } from "react";
 
-export const AuthContext = createContext()
-export const AuthProvider = ({children}) => {
-    const [isLoggedIn,setIsloggedin] = useState(false)
-    const [user,setuser] = useState('');
-    const [isLoading,setisLoading] = useState(false);
-    useEffect(() => {
-      const checkLoginStatus = async()=>{
-        const token = localStorage.getItem('authToken')
-        if(token){
-            try {
-                const response = fetch('http://localhost:3000/auth/me',{
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
+export const AuthContext = createContext();
 
-                const data = await response.json();
-                if(data.success){
-                    setuser(data.user);
-                    setIsloggedin(true);
+export const AuthProvider = ({ children }) => {
+  const [isLoggedIn, setIsloggedin] = useState(false);
+  const [user, setuser] = useState("");
+  const [isLoading, setisLoading] = useState(true);
 
-                }else{
-                    localStorage.removeItem('authToken');
-                }
-            } catch (error) {
-                console.error('Error verifying authentication:', error);
-          localStorage.removeItem('authToken');
-            }
+  const checkLoginStatus = useCallback(async () => {
+    setisLoading(true); 
+
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      try {
+        const response = await fetch("http://localhost:3000/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          setuser(data.user);
+          setIsloggedin(true);
+        } else {
+          localStorage.removeItem("authToken");
+          setIsloggedin(false);
         }
-        setisLoading(false);
+      } catch (error) {
+        console.log("Error verifying authentication:", error);
+        localStorage.removeItem("authToken");
+        setIsloggedin(false);
       }
-    
-      checkLoginStatus()
-    }, [])
-    
-0
-    const login = (userData,token)=>{
-        localStorage.setItem('authToken',token);
-        setuser(userData);
-         
-        setIsloggedin(true);
+    } else {
+      setIsloggedin(false);
     }
-    const logout = ()=>{
-        localStorage.removeItem('authToken')
-        setuser(null)
-        setIsloggedin(false)
-    }
+
+    setisLoading(false);
+  }, []);
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, [checkLoginStatus]);
+
+  const login = (userData, token) => {
+    localStorage.setItem("authToken", token);
+    setuser(userData);
+    setIsloggedin(true);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    setuser(null);
+    setIsloggedin(false);
+  };
+
   return (
     <AuthContext.Provider
-    value={{
+      value={{
         isLoggedIn,
         isLoading,
         login,
         logout,
-        user
-    }}
+        user,
+        checkLoginStatus, 
+      }}
     >
-        {children}
+      {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

@@ -25,7 +25,12 @@ const LeetcodeProfile = () => {
       setIsLoading(false);
     }
   };
-
+  useEffect(() => {
+    if(leetcodeData === undefined){
+      setIserror('leetcode username not correct, please check again')
+    }
+  }, [leetcodeData])
+  
   useEffect(() => {
     if (
       leetcodeData &&
@@ -64,7 +69,7 @@ const LeetcodeProfile = () => {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-60">
         <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-md">
           <p className="font-bold">Error</p>
           <p>{error}</p>
@@ -72,7 +77,6 @@ const LeetcodeProfile = () => {
       </div>
     )
   }
-
   if (!isLoading && leetcodeData) {
     return (
       <div className="container max-w-[1200px] mx-auto px-4 py-8">
@@ -95,6 +99,11 @@ const LeetcodeProfile = () => {
                     <span className="text-gray-700 font-medium">Rank: {leetcodeData.profile.ranking}</span>
                   </div>
                 )}
+                {solvedProblem[0] && (
+                  <div className="mt-2 bg-white bg-opacity-20 px-3 py-1 rounded-full inline-block">
+                  <span className="text-gray-700 font-medium">solved <span className='text-2xl font-bold'>{solvedProblem[0].count}</span></span>
+                </div>
+                )}
               </div>
             </div>
           </div>
@@ -108,20 +117,20 @@ const LeetcodeProfile = () => {
                 {/* Easy Problems */}
                 <div className="bg-green-100 rounded-lg p-4 shadow-md transition-transform hover:scale-105">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-green-800">{solvedProblem[0]?.difficulty || "Easy"}</h3>
+                    <h3 className="text-lg font-medium text-green-800">{solvedProblem[1]?.difficulty || "Easy"}</h3>
                     <div className="bg-green-500 text-white text-sm px-2 py-1 rounded-full">
-                      {solvedProblem[0]?.count || 0} solved
+                      {solvedProblem[1]?.count || 0} solved
                     </div>
                   </div>
                   <div className="mt-3">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
                       <div 
                         className="bg-green-500 h-2.5 rounded-full" 
-                        style={{ width: `${solvedProblem[0]?.count > 0 ? (solvedProblem[0]?.count / solvedProblem[0]?.submissions * 100) : 0}%` }}>
+                        style={{ width: `${solvedProblem[1]?.count > 0 ? (solvedProblem[1]?.count / 873 * 100) : 0}%` }}>
                       </div>
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
-                      {solvedProblem[0]?.count || 0}/{solvedProblem[0]?.submissions || 0} submissions
+                      {solvedProblem[1]?.count || 0}/873 submissions
                     </p>
                   </div>
                 </div>
@@ -129,20 +138,20 @@ const LeetcodeProfile = () => {
                 {/* Medium Problems */}
                 <div className="bg-yellow-100 rounded-lg p-4 shadow-md transition-transform hover:scale-105">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-yellow-800">{solvedProblem[1]?.difficulty || "Medium"}</h3>
+                    <h3 className="text-lg font-medium text-yellow-800">{solvedProblem[2]?.difficulty || "Medium"}</h3>
                     <div className="bg-yellow-500 text-white text-sm px-2 py-1 rounded-full">
-                      {solvedProblem[1]?.count || 0} solved
+                      {solvedProblem[2]?.count || 0} solved
                     </div>
                   </div>
                   <div className="mt-3">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
                       <div 
                         className="bg-yellow-500 h-2.5 rounded-full" 
-                        style={{ width: `${solvedProblem[1]?.count > 0 ? (solvedProblem[1]?.count / solvedProblem[1]?.submissions * 100) : 0}%` }}>
+                        style={{ width: `${solvedProblem[2]?.count > 0 ? (solvedProblem[2]?.count / 1835 * 100) : 0}%` }}>
                       </div>
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
-                      {solvedProblem[1]?.count || 0}/{solvedProblem[1]?.submissions || 0} submissions
+                      {solvedProblem[2]?.count || 0}/1835 submissions
                     </p>
                   </div>
                 </div>
@@ -150,20 +159,20 @@ const LeetcodeProfile = () => {
                 {/* Hard Problems */}
                 <div className="bg-red-100 rounded-lg p-4 shadow-md transition-transform hover:scale-105">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-red-800">{solvedProblem[2]?.difficulty || "Hard"}</h3>
+                    <h3 className="text-lg font-medium text-red-800">{solvedProblem[3]?.difficulty || "Hard"}</h3>
                     <div className="bg-red-500 text-white text-sm px-2 py-1 rounded-full">
-                      {solvedProblem[2]?.count || 0} solved
+                      {solvedProblem[3]?.count || 0} solved
                     </div>
                   </div>  
                   <div className="mt-3">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
                       <div 
                         className="bg-red-500 h-2.5 rounded-full" 
-                        style={{ width: `${solvedProblem[2]?.count > 0 ? (solvedProblem[2]?.count / solvedProblem[2]?.submissions * 100) : 0}%` }}>
+                        style={{ width: `${solvedProblem[3]?.count > 0 ? (solvedProblem[3]?.count / 827 * 100) : 0}%` }}>
                       </div>
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
-                      {solvedProblem[2]?.count || 0}/{solvedProblem[2]?.submissions || 0} submissions
+                      {solvedProblem[3]?.count || 0}/827 submissions
                     </p>
                   </div>
                 </div>

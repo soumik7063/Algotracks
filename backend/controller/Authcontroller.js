@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import pkg from 'jsonwebtoken'
 import User from '../models/DBmodel.js'
 const JWT_SECRET = "1234567";
-const {jwt,sign} = pkg;
+const {jwt,sign,verify} = pkg;
 console.log(User)
 export const signup = async(req,res)=>{
     try {
@@ -71,13 +71,10 @@ export const login = async (req, res) => {
   }
 }
 
-// On your backend
 export const getMe = async (req, res) => {
     try {
-      // The user ID would come from your auth middleware
-      const userId = req.user.id;
+      const userId = req.user._id;
       
-      // Find user by ID but don't return the password
       const user = await User.findById(userId).select('-password');
       
       if (!user) {
@@ -99,24 +96,23 @@ export const getMe = async (req, res) => {
       });
     } 
   };
+  export const authenticate = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "No token provided" ,success:false});
+    }
+  
+    const token =  req.headers.authorization && req.headers.authorization.split(" ")[1];
+    try {
+      const decoded = verify(token, JWT_SECRET);
+      req.user = decoded;  // ← this is where req.user is set
+      next();
+    } catch (err) {
+      console.log(err)
+      return res.status(401).json({ message: "Invalid token" ,success:false});
+    }
+  };
 
-// export const getProfiles = async(req,res)=>{
-//     try {
-//       const {email} = req.body;
-//     const existingUser = await User.findOne({email})
-//     if(!existingUser){
-//       return res
-//       .status(400)
-//         .json({
-//           message: "User doesn't exists, you can login",
-//           success: false,
-//         });
-//     }
-
-//     } catch (error) {
-      
-//     }
-// }
 
 export const updatePlatformIds = async (req, res) => {
   try {
@@ -129,13 +125,13 @@ export const updatePlatformIds = async (req, res) => {
       });
     }
     
-    const validPlatforms = ['Codeforce', 'Leetcode', 'Codechef', 'Atcoder'];
-    if (!validPlatforms.includes(platform)) {
-      return res.status(400).json({ 
-        message: "Invalid platform", 
-        success: false 
-      });
-    }
+    // const validPlatforms = ['Codeforce', 'Leetcode', 'Codechef', 'Atcoder'];
+    // if (!validPlatforms.includes(platform)) {
+    //   return res.status(400).json({ 
+    //     message: "Invalid platform", 
+    //     success: false 
+    //   });
+    // }
     
     const existingUser = await User.findOne({ email });
     
@@ -145,8 +141,14 @@ export const updatePlatformIds = async (req, res) => {
         success: false 
       });
     }
-    
-    existingUser.cpProfiles[platform] = platformID;
+    if(platform === "name" || platform === "email"){
+      if(platform === "name"){
+        existingUser.name = platformID;
+      }else{
+        existingUser.email = platformID;
+      }
+    }
+    else existingUser.cpProfiles[platform] = platformID;
     
     await existingUser.save();
     

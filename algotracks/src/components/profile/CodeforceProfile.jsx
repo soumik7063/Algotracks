@@ -27,7 +27,7 @@ const CodeforceProfile = () => {
         if (data.status == "OK") {
           setCodeforceDta(data.result[0]);
         } else {
-          setError("User not found. Please check the username and try again.");
+          setError("Codeforce User not found. Please check the username and try again.");
         }
       } catch (error) {
         setError("Failed to fetch user data. Please try again later.");
@@ -39,9 +39,7 @@ const CodeforceProfile = () => {
     getUser();
   }, []);
 
-  if (!isLoggedIn) {
-    return <Navigate to="/signup" />;
-  }
+  
   const getRatingColorClass = (rating) => {
     if (rating < 1200) return "bg-gray-500";
     if (rating < 1400) return "bg-green-500";
@@ -77,11 +75,20 @@ const CodeforceProfile = () => {
       </div>
     );
   }
-
+  if(error){
+    return (
+      <div className="flex justify-center items-center h-60">
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-md">
+          <p className="font-bold">Error</p>
+          <p>{error}</p>
+        </div>
+      </div>
+    )
+  }
   if (!isloading) {
     return (
       <>
-        <div className="mt-20">
+        <div className="mt-5">
           <div className="bg-white max-w-[1180px] rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300  mx-auto">
             <div className="flex flex-col md:flex-row">
               <div className="md:w-1/3 bg-gradient-to-br from-blue-500 to-purple-600 p-6 flex items-center justify-center">
