@@ -5,7 +5,7 @@ import Navbar from "./components/layout/Navbar";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Contest from "./pages/Contest";
-import CodeforcesContest from "./pages/contest/codeforcesContest";
+import CodeforcesContest from "./pages/contest/CodeforcesContest";
 import Signup from "./pages/Signup";
 import Profile from "./components/profile/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
