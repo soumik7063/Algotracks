@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("authToken");
     if (token) {
       try {
-        const response = await fetch("http://localhost:3000/auth/me", {
+        const response = await fetch("https://algotracks.onrender.com/auth/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
