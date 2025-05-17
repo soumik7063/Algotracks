@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../AuthContext";
 
 const CodeforcesContest = () => {
-  const { user } = useContext(AuthContext);
+  const { user ,checkLoginStatus} = useContext(AuthContext);
   const [contestData, setContestData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [pastContest, setPastContest] = useState(null);
@@ -15,7 +15,12 @@ const CodeforcesContest = () => {
   // For tab selection
   const [activeTab, setActiveTab] = useState("upcoming");
   const [bookmarked, setBookmarked] = useState({});
-
+  const [bookmarkContest,setbookmarkContest]= useState([])
+  useEffect(() => {
+    if (user && user.bookmarks && user.bookmarks["Codeforce"]) {
+      setbookmarkContest(user.bookmarks["Codeforce"]);
+    }
+  }, [user?.bookmarks?.["Codeforce"]]);
   useEffect(() => {
     if (contestData) {
       setPastContest(
@@ -31,18 +36,16 @@ const CodeforcesContest = () => {
     handleSearch();
   }, []);
 
-  useEffect(() => {
-    if (upcomingContest && upcomingContest.length > 0) {
-      const storedBookmarks = localStorage.getItem("contestBookmarks");
-      if (storedBookmarks) {
-        setBookmarked(JSON.parse(storedBookmarks));
-      } else {
-        const initialBookmarks = {};
-        setBookmarked(initialBookmarks);
-      }
-    }
-  }, [upcomingContest]);
-
+  useEffect(()=>{
+    const newbookmarked ={}
+    bookmarkContest.forEach((id)=>{
+      newbookmarked[id] =true
+    })
+    setBookmarked((prev)=>({
+      ...prev,
+      ...newbookmarked
+    }))
+  },[bookmarkContest])
   const handleSearch = async () => {
     setIsLoading(true);
     try {
@@ -60,7 +63,7 @@ const CodeforcesContest = () => {
       }
     } catch (err) {
       setError("Failed to fetch contest data. Please try again later.");
-      console.error(err);
+      console.log(err);
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +80,7 @@ const CodeforcesContest = () => {
 
     setBookmarked(newBookmarked);
 
-    try {
+    try { 
       setIsbookmarkLoading(true);
 
       const response = await fetch("http://localhost:3000/bookmarks", {
@@ -88,11 +91,11 @@ const CodeforcesContest = () => {
         body: JSON.stringify({
           _id: user._id,
           platform: "Codeforce",
-          operation: newBookmarked[contestid], // use the updated value
-          contestID: contestid,
+          operation: newBookmarked[contestid], 
+          contestID: String(contestid),                             
         }),
       });
-
+      await checkLoginStatus()
       const res = await response.json();
       console.log(res)
       if (res.success) {
@@ -134,17 +137,6 @@ const CodeforcesContest = () => {
     } else {
       return `${hours}h ${minutes}m`;
     }
-  };
-
-  const toggleBookmark = (id) => {
-    const newBookmarked = {
-      ...bookmarked,
-      [id]: !bookmarked[id],
-    };
-
-    setBookmarked(newBookmarked);
-
-    localStorage.setItem("contestBookmarks", JSON.stringify(newBookmarked));
   };
 
   return (

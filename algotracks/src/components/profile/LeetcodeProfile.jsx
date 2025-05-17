@@ -83,6 +83,7 @@ const LeetcodeProfile = () => {
         <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg shadow-xl overflow-hidden">
           {/* Profile Header */}
           <div className="bg-gradient-to-r from-green-500 via-green-400 to-teal-400 p-6">
+              <h1 className='text-3xl font-bold mb-2 text-gray-700'>Leetcode Profile</h1>
             <div className="flex flex-col md:flex-row items-center md:items-start">
               <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-green-600 shadow-lg mb-4 md:mb-0 md:mr-6">
                 {leetcodeData.username ? leetcodeData.username.charAt(0).toUpperCase() : "?"}

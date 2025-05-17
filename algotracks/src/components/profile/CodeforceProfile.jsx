@@ -106,7 +106,7 @@ const CodeforceProfile = () => {
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
                     Codeforces Profile
                   </h1>
-                  <div className="ml-auto bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                  <div className="ml-auto text-2xl bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-semibold">
                     {(codeforceData &&
                       codeforceData.maxRank &&
                       codeforceData.maxRank) ||

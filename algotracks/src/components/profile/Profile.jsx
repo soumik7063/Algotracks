@@ -19,10 +19,10 @@ const Profile = () => {
   return (
     <div>
       <div className="flex justify-between">
-        <div className="mt-20 border w-fit px-4 py-2 max-w-[1200px] font-semibold cursor-pointer mx-auto rounded-md bg-green-200 hover:scale-105 transition-all duration-300 drop-shadow-2xl">
+        <div className="mt-20 border w-fit text-white px-4 py-2 max-w-[1200px] font-semibold cursor-pointer mx-auto rounded-md bg-blue-600 hover:scale-105 transition-all duration-300 drop-shadow-2xl">
           <button onClick={()=>setToggle((prev)=>!prev)}>Update Profile</button>
         </div>
-        <div className="mt-20 border w-fit px-4 py-2 max-w-[1200px] font-semibold cursor-pointer mx-auto rounded-md bg-gradient-to-l bg-yellow-100 hover:scale-105 transition-all duration-300 shadow-2xl">
+        <div className="mt-20 text-white border w-fit px-4 py-2 max-w-[1200px] font-semibold cursor-pointer mx-auto rounded-md bg-gradient-to-l bg-blue-600 hover:scale-105 transition-all duration-300 shadow-2xl">
           <button onClick={handelToggle} >{isLoading ?'Refreshing...':'Refresh'}</button>
         </div>
       </div>

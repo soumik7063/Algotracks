@@ -21,6 +21,7 @@ export const signup = async(req,res)=>{
     await newUser.save();
     res.status(201).json({ message: "Sign up successfully", success: true });
     } catch (error) {
+      console.log("error: ",error)
     res.status(500).json({ message: "internal server error", success: false });
         
     }
@@ -48,7 +49,7 @@ export const login = async (req, res) => {
               email: existingUser.email,
               _id: existingUser._id
           },
-          JWT_SECRET,
+          process.env.JWT_SECRET,
           {
               expiresIn: '24h'
           }
@@ -104,7 +105,7 @@ export const getMe = async (req, res) => {
   
     const token =  req.headers.authorization && req.headers.authorization.split(" ")[1];
     try {
-      const decoded = verify(token, JWT_SECRET);
+      const decoded = verify(token, process.env.JWT_SECRET);
       req.user = decoded;  // ← this is where req.user is set
       next();
     } catch (err) {
