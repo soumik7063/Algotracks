@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CodeforcesContest from './contest/codeforcesContest'
+import CodeforcesContest from './contest/CodeforcesContest'
 import LeetcodeContest from './contest/LeetcodeContest'
 import AtcoderContest from './contest/AtcoderContest'
 const Contest = () => {
