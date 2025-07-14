@@ -129,7 +129,8 @@ const CP_ids = ({ platform }) => {
                   onChange={(e) => setPlatformId(e.target.value)}
                   type="text"
                   placeholder={`Enter your ${platform} ID`}
-                  disabled={!isEditable}
+                  readOnly={!isEditable}
+                  onDoubleClick={handleEditClick}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <span className="text-gray-400">

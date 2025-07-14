@@ -321,10 +321,10 @@ const CodeforcesContest = () => {
                                     </div>
                                   </div>
                                   <div
-                                    onClick={() => updateBookmark(contest.id)}
+                                    onClick={() => updateBookmark(contest.name)}
                                     className="text-3xl font-bold cursor-pointer"
                                     style={{
-                                      color: bookmarked[contest.id]
+                                      color: bookmarked[contest.name]
                                         ? "#FFD700"
                                         : "#808080",
                                     }}

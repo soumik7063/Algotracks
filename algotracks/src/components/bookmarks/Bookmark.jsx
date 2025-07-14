@@ -9,7 +9,7 @@ const Bookmark = () => {
       if(user && user.bookmarks){
         setbookmarks(user.bookmarks)
       }
-      console.log(user.bookmarks)
+       console.log(user.bookmarks)
     },[user.bookmarks])
     
     useEffect(()=>{
@@ -29,9 +29,16 @@ const Bookmark = () => {
      <div>
         <h1>Codeforces Bookmarks</h1>
         {
-          bookmarks["Codeforce"].map((item,idx)=>{
-            <div key={idx}>
-              <Link>Codeforce contest {item}</Link>
+          bookmarks && bookmarks["Codeforce"] && bookmarks["Codeforce"].map((item,idx)=>{
+             return <div key={idx}>
+              <Link target='_blank' to={`https://codeforces.com/contests/`}>Codeforce contest {item}</Link>
+            </div>
+          })
+        }
+        {
+          bookmarks && bookmarks["Leetcode"] && bookmarks["Leetcode"].map((item,idx)=>{
+             return <div key={idx}>
+              <Link target='_blank' to={`https://codeforces.com/contests/`}>Codeforce contest {item}</Link>
             </div>
           })
         }

@@ -12,6 +12,7 @@ const AuthForm = () => {
     email: '',
     password: ''
   });
+  const[loading , setloading] = useState(false);
   
   // Form state for login
   const [loginInfo, setLoginInfo] = useState({
@@ -47,6 +48,7 @@ const AuthForm = () => {
     }
     
     try {
+      setloading(true);
       const response = await fetch('https://algotracks.onrender.com/auth/signup', {
         method: 'POST',
         headers: {
@@ -72,6 +74,7 @@ const AuthForm = () => {
       setErrorMsg('An error occurred. Please try again.');
       console.log(error);
     } finally {
+      setloading(false);
       setSignupInfo({
         name: '',
         email: '',
@@ -92,6 +95,7 @@ const AuthForm = () => {
     }
     
     try {
+      setloading(true);
       const response = await fetch('https://algotracks.onrender.com/auth/login', {
         method: 'POST',
         headers: {
@@ -120,6 +124,7 @@ const AuthForm = () => {
       setErrorMsg('An error occurred. Please try again.');
       console.log(error);
     } finally {
+      setloading(false);
       setLoginInfo({
         email: '',
         password: ''
@@ -191,7 +196,9 @@ const AuthForm = () => {
               className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-2 rounded-md transition-colors"
               type="submit"
             >
-              Login
+              {
+                loading?'logging...':'login'
+              }
             </button>
           </form>
         ) : (
@@ -240,7 +247,7 @@ const AuthForm = () => {
               className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-2 rounded-md transition-colors"
               type="submit"
             >
-              Sign Up
+             {loading?'signing up...' :'signUp'}
             </button>
           </form>
         )}
