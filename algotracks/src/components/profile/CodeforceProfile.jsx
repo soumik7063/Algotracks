@@ -1,45 +1,22 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
-
+import { Profilecontext } from "./ProfileContext";
+import { Submission } from "./Submission";
+const verdict = {
+  OK: "Accepted",
+  WRONG_ANSWER: "Wrong answer",
+  TIME_LIMIT_EXCEEDED: "Time limit exceeded",
+};
 const CodeforceProfile = () => {
-  const { isLoggedIn, user, loading } = useContext(AuthContext);
-  const [codeforceData, setCodeforceDta] = useState(null);
-  const [isloading, setIsloading] = useState(true);
-  const [error, setError] = useState("");
- 
-   //Later work
-//   const [CodeforceRating, setCodeforceRating] = useState(null);
-//   https://codeforces.com/api/user.rating?handle=soumik7063
+  const [displayCount, setDisplayCount] = useState(5);
+  const { loading } = useContext(AuthContext);
+  const handelShowMore = () => {
+    setDisplayCount((prev) => prev + 5);
+  };
 
-  const UserHandel = user?.cpProfiles?.Codeforce;
-
-  useEffect(() => {
-    const getUser = async () => {
-      setIsloading(true);
-      setError(null);
-      try {
-        const response = await fetch(
-          `https://codeforces.com/api/user.info?handles=${UserHandel}`
-        );
-        const data = await response.json();
-
-        if (data.status == "OK") {
-          setCodeforceDta(data.result[0]);
-        } else {
-          setError("Codeforce User not found. Please check the username and try again.");
-        }
-      } catch (error) {
-        setError("Failed to fetch user data. Please try again later.");
-        console.error(error);
-      } finally {
-        setIsloading(false);
-      }
-    };
-    getUser();
-  }, []);
-
-  
+  const { codeforceData, isLoading, isError, CodeforceSubmission } =
+    useContext(Profilecontext);
   const getRatingColorClass = (rating) => {
     if (rating < 1200) return "bg-gray-500";
     if (rating < 1400) return "bg-green-500";
@@ -49,7 +26,7 @@ const CodeforceProfile = () => {
     if (rating < 2400) return "bg-orange-500";
     return "bg-red-500";
   };
-  if (loading || isloading) {
+  if (loading || isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <svg
@@ -75,17 +52,17 @@ const CodeforceProfile = () => {
       </div>
     );
   }
-  if(error){
+  if (isError) {
     return (
       <div className="flex justify-center items-center h-60">
         <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-md">
-          <p className="font-bold">Error</p>
-          <p>{error}</p>
+          <p className="font-bold">isError</p>
+          <p>{isError}</p>
         </div>
       </div>
-    )
+    );
   }
-  if (!isloading) {
+  if (!isLoading && codeforceData) {
     return (
       <>
         <div className="mt-5">
@@ -175,6 +152,50 @@ const CodeforceProfile = () => {
                   </a>
                 </div>
               </div>
+            </div>
+            <div className="bg-gray-900">
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Recent Submissions
+            </h2>
+            <div className="grid grid-cols-5 text-md text-center  text-gray-300 font-semibold">
+              <h1 className="col-span-2">Name</h1>
+              <h1>Date</h1>
+              <h1>Time</h1>
+              <h1>Status</h1>
+            </div>
+            {CodeforceSubmission &&
+              CodeforceSubmission.slice(0, displayCount).map((item, idx) => {
+                return (
+                  <Submission
+                    key={idx}
+                    title={item.problem.name}
+                    time={item.relativeTimeSeconds}
+                    status={verdict[item.verdict]}
+                  />
+                );
+              })}
+            {CodeforceSubmission.length > displayCount && (
+              <div className="mt-6 text-center">
+                <button
+                  onClick={handelShowMore}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-pink-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Show More
+                  <svg
+                    className="ml-1 -mr-1 h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+            )}
             </div>
           </div>
         </div>

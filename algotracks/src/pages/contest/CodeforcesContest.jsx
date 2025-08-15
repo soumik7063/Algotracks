@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../AuthContext";
+import { contestContext } from "../../ContestDataContext";
+import ContestCard from "./contestCard";
+import PastContestcard from "./PastContestcard";
+import Error from "../../Error";
+import { useNavigate } from "react-router-dom";
 
 const CodeforcesContest = () => {
-  const { user ,checkLoginStatus} = useContext(AuthContext);
-  const [contestData, setContestData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const { user, checkLoginStatus, isLoggedIn } = useContext(AuthContext);
+  const { contestData, isLoading } = useContext(contestContext);
   const [pastContest, setPastContest] = useState(null);
   const [upcomingContest, setUpcomingContest] = useState(null);
   const [error, setError] = useState(null);
@@ -15,7 +20,7 @@ const CodeforcesContest = () => {
   // For tab selection
   const [activeTab, setActiveTab] = useState("upcoming");
   const [bookmarked, setBookmarked] = useState({});
-  const [bookmarkContest,setbookmarkContest]= useState([])
+  const [bookmarkContest, setbookmarkContest] = useState([]);
   useEffect(() => {
     if (user && user.bookmarks && user.bookmarks["Codeforce"]) {
       setbookmarkContest(user.bookmarks["Codeforce"]);
@@ -33,54 +38,32 @@ const CodeforcesContest = () => {
   }, [contestData]);
 
   useEffect(() => {
-    handleSearch();
-  }, []);
-
-  useEffect(()=>{
-    const newbookmarked ={}
-    bookmarkContest.forEach((id)=>{
-      newbookmarked[id] =true
-    })
-    setBookmarked((prev)=>({
+    const newbookmarked = {};
+    bookmarkContest.forEach((contest) => {
+      newbookmarked[contest.id] = true;
+    });
+    setBookmarked((prev) => ({
       ...prev,
-      ...newbookmarked
-    }))
-  },[bookmarkContest])
-  const handleSearch = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        "https://codeforces.com/api/contest.list?gym=false"
-      );
-      const data = await response.json();
-      if (data.status === "OK") {
-        setContestData(data.result);
-        // Reset display count when loading new data
-        setDisplayCount(10);
-      } else {
-        setError("Error fetching contest data");
-        console.error("Error fetching contest data");
-      }
-    } catch (err) {
-      setError("Failed to fetch contest data. Please try again later.");
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      ...newbookmarked,
+    }));
+  }, [bookmarkContest]);
 
   const handleShowMore = () => {
     setDisplayCount((prevCount) => prevCount + 10);
   };
-  const updateBookmark = async (contestid) => {
+  const updateBookmark = async (contest) => {
+    if (!isLoggedIn) {
+      navigate("/signup");
+      return
+    }
     const newBookmarked = {
       ...bookmarked,
-      [contestid]: !bookmarked[contestid],
+      [contest.id]: !bookmarked[contest.id],
     };
 
     setBookmarked(newBookmarked);
 
-    try { 
+    try {
       setIsbookmarkLoading(true);
 
       const response = await fetch("https://algotracks.onrender.com/bookmarks", {
@@ -91,13 +74,13 @@ const CodeforcesContest = () => {
         body: JSON.stringify({
           _id: user._id,
           platform: "Codeforce",
-          operation: newBookmarked[contestid], 
-          contestID: String(contestid),                             
+          operation: newBookmarked[contest.id],
+          contest: contest,
         }),
       });
-      await checkLoginStatus()
+      await checkLoginStatus();
       const res = await response.json();
-      console.log(res)
+      console.log(res);
       if (res.success) {
         setsuccessmsg(res.message);
       } else {
@@ -110,40 +93,11 @@ const CodeforcesContest = () => {
     }
   };
 
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleString("en-US", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  const getTimeRemaining = (startTimeSeconds) => {
-    const now = Math.floor(Date.now() / 1000);
-    const timeRemaining = startTimeSeconds - now;
-
-    if (timeRemaining <= 0) return "Started";
-
-    const days = Math.floor(timeRemaining / 86400);
-    const hours = Math.floor((timeRemaining % 86400) / 3600);
-    const minutes = Math.floor((timeRemaining % 3600) / 60);
-
-    if (days > 0) {
-      return `${days}d ${hours}h`;
-    } else {
-      return `${hours}h ${minutes}m`;
-    }
-  };
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-4 transform transition-transform duration-200 hover:scale-105">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 py-6 px-6">
+        <div className="bg-gradient-to-r from-gray-900 to-indigo-800 py-6 px-6">
           <h1 className="text-white text-2xl md:text-3xl font-bold text-center">
             Codeforces Contest Calendar
           </h1>
@@ -153,7 +107,7 @@ const CodeforcesContest = () => {
         </div>
 
         {/* Action Bar */}
-        <div className="bg-gray-100 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="bg-gray-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="tabs flex rounded-md shadow-sm overflow-hidden">
             <button
               onClick={() => setActiveTab("upcoming")}
@@ -167,7 +121,7 @@ const CodeforcesContest = () => {
             </button>
             <button
               onClick={() => setActiveTab("past")}
-              className={`px-4 py-2 text-sm font-medium ${
+              className={` px-4 py-2 text-sm font-medium ${
                 activeTab === "past"
                   ? "bg-blue-600 text-white"
                   : "bg-white text-gray-700 hover:bg-gray-50"
@@ -178,7 +132,7 @@ const CodeforcesContest = () => {
           </div>
 
           <button
-            onClick={handleSearch}
+            onClick={() => window.location.reload()}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             disabled={isLoading}
           >
@@ -213,28 +167,7 @@ const CodeforcesContest = () => {
         </div>
 
         {/* Error Message */}
-        {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 m-6">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-red-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <p className="text-sm text-red-700">{error}</p>
-              </div>
-            </div>
-          </div>
-        )}
+        {error && <Error error={error} />}
 
         {/* Loading State */}
         {isLoading && !error && (
@@ -256,89 +189,15 @@ const CodeforcesContest = () => {
                     {upcomingContest
                       .slice()
                       .reverse()
-                      .map((contest) => {
-                        const hours = Math.floor(
-                          contest.durationSeconds / 3600
-                        );
-                        const minutes = Math.floor(
-                          (contest.durationSeconds % 3600) / 60
-                        );
-                        const timeRemaining = getTimeRemaining(
-                          contest.startTimeSeconds
-                        );
-
+                      .map((contest, idx) => {
                         return (
-                          <div
-                            key={contest.id}
-                            className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
-                          >
-                            <div className="md:flex">
-                              <div className="md:flex-shrink-0 flex items-center justify-center bg-blue-50 text-blue-700 font-semibold p-4 md:w-32">
-                                <div className="text-center">
-                                  <div className="text-sm uppercase tracking-wide">
-                                    Starts in
-                                  </div>
-                                  <div className="text-lg font-bold">
-                                    {timeRemaining}
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div className="p-4 md:p-6 flex-1">
-                                <a
-                                  href={`https://codeforces.com/contest/${contest.id}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-lg md:text-xl font-semibold text-blue-600 hover:text-blue-800 hover:underline transition mb-2 inline-block"
-                                >
-                                  {contest.name}
-                                </a>
-                                <div className="flex justify-between">
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 w-full">
-                                    <div>
-                                      <span className="block text-sm text-gray-500">
-                                        Start Time
-                                      </span>
-                                      <span className="font-medium">
-                                        {formatDate(contest.startTimeSeconds)}
-                                      </span>
-                                    </div>
-
-                                    <div>
-                                      <span className="block text-sm text-gray-500">
-                                        Duration
-                                      </span>
-                                      <span className="font-medium">{`${hours}h ${minutes}m`}</span>
-                                    </div>
-
-                                    <div>
-                                      <span className="block text-sm text-gray-500">
-                                        Contest ID
-                                      </span>
-                                      <span className="font-medium">
-                                        {contest.id}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div
-                                    onClick={() => updateBookmark(contest.name)}
-                                    className="text-3xl font-bold cursor-pointer"
-                                    style={{
-                                      color: bookmarked[contest.name]
-                                        ? "#FFD700"
-                                        : "#808080",
-                                    }}
-                                  >
-                                    ★
-                                    {isBookmarkLoading ? (
-                                      <span className="text-base">saving... </span>
-                                    ) : ""
-                                    }
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          <ContestCard
+                            key={idx}
+                            contest={contest}
+                            updateBookmark={updateBookmark}
+                            isBookmarkLoading={isBookmarkLoading}
+                            bookmarked={bookmarked}
+                          />
                         );
                       })}
                   </div>
@@ -378,64 +237,13 @@ const CodeforcesContest = () => {
                 {pastContest && pastContest.length > 0 ? (
                   <>
                     <div className="grid gap-4">
-                      {pastContest.slice(0, displayCount).map((contest) => {
-                        const startDate = new Date(
-                          contest.startTimeSeconds * 1000
-                        );
-                        const hours = Math.floor(
-                          contest.durationSeconds / 3600
-                        );
-                        const minutes = Math.floor(
-                          (contest.durationSeconds % 3600) / 60
-                        );
-
-                        return (
-                          <div
-                            key={contest.id}
-                            className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition-shadow"
-                          >
-                            <div className="p-4">
-                              <div className="flex justify-between items-start">
-                                <a
-                                  href={`https://codeforces.com/contest/${contest.id}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-md font-medium text-blue-600 hover:text-blue-800 hover:underline transition"
-                                >
-                                  {contest.name}
-                                </a>
-
-                                <div
-                                  onClick={() => toggleBookmark(contest.id)}
-                                  className="text-2xl font-bold cursor-pointer ml-2"
-                                  style={{
-                                    color: bookmarked[contest.id]
-                                      ? "#FFD700"
-                                      : "#808080",
-                                  }}
-                                >
-                                  ★
-                                </div>
-                              </div>
-
-                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2 text-sm">
-                                <div className="text-gray-500">
-                                  <span className="font-medium">Date:</span>{" "}
-                                  {formatDate(contest.startTimeSeconds)}
-                                </div>
-                                <div className="text-gray-500">
-                                  <span className="font-medium">Duration:</span>{" "}
-                                  {`${hours}h ${minutes}m`}
-                                </div>
-                                <div className="text-gray-500">
-                                  <span className="font-medium">ID:</span>{" "}
-                                  {contest.id}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
+                      {pastContest
+                        .slice(0, displayCount)
+                        .map((contest, idx) => {
+                          return (
+                            <PastContestcard key={idx} contest={contest} />
+                          );
+                        })}
                     </div>
 
                     {pastContest.length > displayCount && (

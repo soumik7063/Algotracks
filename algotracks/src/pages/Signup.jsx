@@ -4,9 +4,8 @@ import {AuthContext} from '../AuthContext.jsx'
 const AuthForm = () => {
     const {login} = useContext(AuthContext);
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   
-  // Form state for signup
   const [signupInfo, setSignupInfo] = useState({
     name: '',
     email: '',
@@ -14,29 +13,24 @@ const AuthForm = () => {
   });
   const[loading , setloading] = useState(false);
   
-  // Form state for login
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: ''
   });
   
-  // Error message state
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   
-  // Handle input changes for signup form
   const handleSignupChange = (e) => {
     const { name, value } = e.target;
     setSignupInfo({ ...signupInfo, [name]: value });
   };
   
-  // Handle input changes for login form
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLoginInfo({ ...loginInfo, [name]: value });
   };
   
-  // Handle signup form submission
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
@@ -62,10 +56,8 @@ const AuthForm = () => {
       
       if (success) {
         setSuccessMsg(message || 'Signup successful!');
-        // login(res.user,res.token)
         setTimeout(() => {
           setIsLogin(true)
-          // navigate('/profile');
         }, 2000);
       } else {
         setErrorMsg(message || 'Signup failed');
@@ -83,7 +75,6 @@ const AuthForm = () => {
     }
   };
   
-  // Handle login form submission
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
@@ -107,7 +98,6 @@ const AuthForm = () => {
       const res = await response.json();
       const { message, success, token } = res;
       if (success) {
-        // Store token if provided
         if (token) {
           localStorage.setItem('authToken', token);
         }
@@ -132,7 +122,6 @@ const AuthForm = () => {
     }
   };
   
-  // Toggle between login and signup forms
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setErrorMsg('');
@@ -255,7 +244,7 @@ const AuthForm = () => {
         <div className="flex justify-between my-4 px-8 pb-4">
           {isLogin && (
             <button 
-              onClick={() => {/* Add forgot password functionality */}}
+              onClick={() => navigate('/forget_password')}
               className="text-blue-700 hover:underline text-sm"
             >
               Forgot Password?

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import pkg from 'jsonwebtoken'
 import User from '../models/DBmodel.js'
-const JWT_SECRET = "1234567";
+const JWT_SECRET = process.env.JWT_SECRET|| "1234567";
 const {jwt,sign,verify} = pkg;
 console.log(User)
 export const signup = async(req,res)=>{
@@ -49,7 +49,7 @@ export const login = async (req, res) => {
               email: existingUser.email,
               _id: existingUser._id
           },
-          process.env.JWT_SECRET,
+          JWT_SECRET,
           {
               expiresIn: '24h'
           }
@@ -105,8 +105,8 @@ export const getMe = async (req, res) => {
   
     const token =  req.headers.authorization && req.headers.authorization.split(" ")[1];
     try {
-      const decoded = verify(token, process.env.JWT_SECRET);
-      req.user = decoded;  // ← this is where req.user is set
+      const decoded = verify(token, JWT_SECRET);
+      req.user = decoded;  
       next();
     } catch (err) {
       console.log(err)

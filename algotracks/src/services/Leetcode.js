@@ -2,7 +2,7 @@ import { handleResponse, handleError } from './api';
 
 // LeetCode doesn't have a public REST API, but they have a GraphQL API
 // const API_URL = 'https://leetcode.com/graphql';
-const NEW_API_URL = 'http://localhost:3000/leetcode'
+const NEW_API_URL = 'https://algotracks.onrender.com/leetcode'
 /**
  * Get user profile information
  * @param {string} username - LeetCode username
@@ -81,7 +81,7 @@ export const getRecentSubmissions = async (username, limit = 10) => {
       }
     `;
     
-    const response = await fetch(API_URL, {
+    const response = await fetch(NEW_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import bcrypt from "bcrypt";
 
 // const mongoURI = "mongodb+srv://ghataksoumik7063:NQQfSrObh8sJFM45@algotracks.79l0nt1.mongodb.net/?retryWrites=true&w=majority&appName=algotracks";
@@ -6,21 +6,10 @@ import bcrypt from "bcrypt";
 // mongoose.connect(mongoURI)
 //   .then(() => console.log("✅ MongoDB connected"))
 //   .catch((err) => console.error("❌ Connection failed:", err));
-const contestDetails = new mongoose.Schema(
-  {
-    contestID: {
-      type: [Number],
-      default: [],
-    },
-  },
-  { _id: false }
-);
-const bookmarkschema = new mongoose.Schema({
-  Codeforce: contestDetails,
-  Codechef: contestDetails,
-  Leetcode: contestDetails,
-  Atcoder: contestDetails,
-});
+
+const CodeforceSchema = new mongoose.Schema({
+
+})
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -40,10 +29,14 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    token:{
+      type:String,
+      default:""
+    },
     bookmarks: {
-      Codeforce:{type: [String],default:[]},
+      Codeforce:{type: [Object],default:[]},
       Codechef:{type: [String],default:[]},
-      Leetcode:{type: [String],default:[]},
+      Leetcode:{type: [Object],default:[]},
       Atcoder:{type: [String],default:[]},
     },
     cpProfiles: {

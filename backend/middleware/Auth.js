@@ -1,7 +1,9 @@
 import {cookies} from "cookie-parser";
 import {jwt} from 'jsonwebtoken'
 import User from "../models/DBmodel";
-const auth = async (req,res, next)=>{
+const JWT_SECRET = process.env.JWT_SECRET|| "1234567";
+
+export const auth = async (req,res, next)=>{
     try {
         const token = req.cookies.token
     
@@ -9,7 +11,7 @@ const auth = async (req,res, next)=>{
       return res.status(401).json({ message: 'Authentication required' })
 
     }
-      const decode = jwt.verify(token,process.env.JWT_SECRET || 'your_jwt_secret')
+      const decode = jwt.verify(token,JWT_SECRET)
       const user = await User.findById(decode.id).select('-password')
       if (!user) {
         return res.status(404).json({ message: 'User not found' });

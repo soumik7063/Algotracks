@@ -10,10 +10,14 @@ import Signup from "./pages/Signup";
 import Profile from "./components/profile/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Bookmark from "./components/bookmarks/Bookmark";
+import ForgetPassword from "./components/ResetPassword/ForgetPassword";
+import Resetpassword from "./components/ResetPassword/Resetpassword";
+import ChatBot from "./components/chatbot/ChatBot";
 const App = () => {
   return (
     <div>
       <Navbar />
+      <ChatBot/>
       <Routes>
         <Route path="/" element={<Home/>}></Route>
         <Route loader={CodeforcesContest} path='/contests' element={<Contest/>}></Route>
@@ -28,8 +32,9 @@ const App = () => {
             <Bookmark/>
           </ProtectedRoute>
         }>
-
         </Route>
+        <Route path="/forget_password" element={<ForgetPassword/>}></Route>
+        <Route path="/reset_password" element={<Resetpassword/>}></Route>
       </Routes>
     </div>
   );

@@ -1,30 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
-import { getUserProfile } from '../../services/Leetcode';
+import { Submission } from './Submission';
+import {Profilecontext} from './ProfileContext';
 
 const LeetcodeProfile = () => {
-  const { isLoggedIn, user, loading } = useContext(AuthContext);
-  const [leetcodeData, setLeetcodeData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [displayCount,setDisplayCount] = useState(5)
+  const { user, loading } = useContext(AuthContext);
+  const {leetcodeData,submissions,isLoading,handleSearch}  =  useContext(Profilecontext);
   const [solvedProblem, setSolvedProblem] = useState([]);
   const [error, setIserror] = useState('');
-  const username = user?.cpProfiles?.Leetcode;
 
-  useEffect(() => {
-    handleSearch();
-  }, []);
-
-  const handleSearch = async () => {
-    try {
-      const ProfileInfo = await getUserProfile(username);
-      setLeetcodeData(ProfileInfo.data);
-    } catch (error) {
-      setIserror("Not finding user please check username");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handelShowMore = ()=>{
+    setDisplayCount((prev)=>prev+5);
+  }
   useEffect(() => {
     if(leetcodeData === undefined){
       setIserror('leetcode username not correct, please check again')
@@ -215,6 +203,43 @@ const LeetcodeProfile = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-white mb-4">Recent Submissions</h2>
+            <div className='grid grid-cols-5 text-md text-center text-gray-300 font-semibold'>
+              <h1 className='col-span-2'>Name</h1>
+              <h1>Date</h1>
+              <h1>Time</h1>
+              <h1>Status</h1>
+            </div>
+                {
+                submissions && submissions.slice(0,displayCount).map((item,idx) => {
+                  return <Submission key={idx} title={item.title} time={item.timestamp} status={item.statusDisplay} />
+                })
+                }  
+                {submissions.length > displayCount && (
+                  <div className="mt-6 text-center">
+                    
+                        <button
+                          onClick={handelShowMore}
+                          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-pink-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                          Show More
+                          <svg
+                            className="ml-1 -mr-1 h-5 w-5 text-gray-400"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    )}
           </div>
         </div>
       </div>

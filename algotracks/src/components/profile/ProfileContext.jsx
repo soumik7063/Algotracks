@@ -1,9 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { getUserProfile, getRecentSubmissions } from '../../services/Leetcode';
 import { AuthContext } from "../../AuthContext";
 
 export const Profilecontext = createContext(null)
-
 const ProfileContext = ({ children }) => {
     const { user } = useContext(AuthContext);
     const LeetcodeUsername = user?.cpProfiles?.Leetcode;
@@ -21,9 +20,10 @@ const ProfileContext = ({ children }) => {
         return;
     }
     try {
-      const lastsubmit = await fetch(`https://codeforces.com/api/user.status?handle=${CodeforceUsername}&from=1&count=10`)
-      if(lastsubmit && lastsubmit.status === "OK"){
-        setCodeforceSubmission(lastsubmit.result);
+      const lastsubmit = await fetch(`https://codeforces.com/api/user.status?handle=${CodeforceUsername}&from=1&count=20`)
+      const data = await lastsubmit.json();
+      if(data && data.status === "OK"){
+        setCodeforceSubmission(data.result);
       }
     } catch (error) {
       console.error('Error fetching LeetCode data:', error);
@@ -43,7 +43,6 @@ const ProfileContext = ({ children }) => {
             setIsError(null); 
             
             const submissionsData = await getRecentSubmissions(LeetcodeUsername, 100); 
-            const data = await submissionsData.json()
             setSubmissions(submissionsData.data); 
             const ProfileInfo = await getUserProfile(LeetcodeUsername);
             setLeetcodeData(ProfileInfo.data);
@@ -85,9 +84,10 @@ const ProfileContext = ({ children }) => {
     useEffect(()=>{
         if(CodeforceUsername && codeforceData === null && CodeforceSubmission.length === 0 && !isError){
             getUser();
-            // CodeforceLastSubmissionfetch();
+            CodeforceLastSubmissionfetch();
         }
     },[CodeforceUsername])
+   
     const contextValue = {
         leetcodeData,
         submissions,
@@ -106,5 +106,4 @@ const ProfileContext = ({ children }) => {
         </Profilecontext.Provider>
     )
 }
-
 export default ProfileContext
