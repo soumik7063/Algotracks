@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../AuthContext";
 import { contestContext } from "../../ContestDataContext";
-import ContestCard from "./contestCard.jsx";
 import PastContestcard from "./PastContestcard.jsx";
 import Error from "../../Error";
 import { useNavigate } from "react-router-dom";
+import ContestCard from "./ContestCard.jsx";
 
 const CodeforcesContest = () => {
   const navigate = useNavigate();
