@@ -16,7 +16,13 @@ dotenv.config()
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors()) //allow all origin
+app.use(cors({
+  origin: [
+    'https://algotracks-frontend-1.onrender.com',
+    'http://localhost:5173' // for local development
+  ],
+  credentials: true
+}));
 app.use(express.json())
 app.use(cookieParser())
 
@@ -27,6 +33,12 @@ app.use('/leetcode',leetcodeRouter)
 app.use('/bookmarks',updateBookmark)
 app.use('/',UserRouter)
 app.use('/',AiRouter)
-app.listen(PORT, () => {
-    console.log(`✅ Proxy server running at http://localhost:${PORT}`);
+
+const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ Server running on port ${PORT}`);
+});
+
+server.on('error', (err) => {
+    console.error('❌ Server failed to start:', err);
+    process.exit(1);
 });

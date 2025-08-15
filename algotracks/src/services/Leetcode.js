@@ -1,8 +1,8 @@
 import { handleResponse, handleError } from './api';
 
 // LeetCode doesn't have a public REST API, but they have a GraphQL API
-// const API_URL = 'https://leetcode.com/graphql';
-const NEW_API_URL = 'https://algotracks.onrender.com/leetcode'
+const NEW_API_URL = 'https://leetcode.com/graphql';
+// const NEW_API_URL = 'https://algotracks.onrender.com/leetcode'
 /**
  * Get user profile information
  * @param {string} username - LeetCode username

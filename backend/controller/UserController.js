@@ -10,13 +10,13 @@ export const sendResetPasswordMail = async(name,email,token)=>{
             secure:false,
             requireTLS:true,
             auth:{
-                user:'soumikghatak7063@gmail.com',
+                user:process.env.emailUser,
                 pass:'dtdh ghll iqgb cujt'
             }
         })
 
         const mailOptions = { 
-            from:'soumikghatak7063@gmail.com',
+            from:process.env.emailUser,
             to:email,
             subject:'Reset your password',
             html:'<p> Hii '+name+' , please copy the link and <a href="https://algotracks-frontend-1.onrender.com/reset_password?token='+token+'"> reset your password '
