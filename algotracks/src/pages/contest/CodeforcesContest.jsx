@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../AuthContext";
 import { contestContext } from "../../ContestDataContext";
-import ContestCard from "./contestCard";
-import PastContestcard from "./PastContestcard";
+import ContestCard from "./contestCard.jsx";
+import PastContestcard from "./PastContestcard.jsx";
 import Error from "../../Error";
 import { useNavigate } from "react-router-dom";
 

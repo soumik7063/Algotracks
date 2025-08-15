@@ -35,7 +35,6 @@ const formatTimeRemaining = (seconds) => {
   }
 };
 const ContestCard = ({ contest, updateBookmark, isBookmarkLoading ,bookmarked}) => {
-  // console.log(contest)
    const [timeRemaining, setTimeRemaining] = useState(() => {
     const now = Math.floor(Date.now() / 1000);
     return contest.startTimeSeconds - now;

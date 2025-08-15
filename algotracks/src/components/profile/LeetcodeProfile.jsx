@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from "../../AuthContext";
-import { Submission } from './Submission';
+import { Submission } from './Submission.jsx';
 import {Profilecontext} from './ProfileContext';
 
 const LeetcodeProfile = () => {
