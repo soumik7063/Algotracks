@@ -6,7 +6,7 @@ export const Profilecontext = createContext(null)
 const ProfileContext = ({ children }) => {
     const { user } = useContext(AuthContext);
     const LeetcodeUsername = user?.cpProfiles?.Leetcode;
-    const CodeforceUsername = user?.cpProfiles?.Leetcode;
+    const CodeforceUsername = user?.cpProfiles?.Codeforce;
       const [codeforceData, setCodeforceDta] = useState(null);
     const [leetcodeData, setLeetcodeData] = useState(null);
     const [submissions, setSubmissions] = useState([]); 
