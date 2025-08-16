@@ -41,7 +41,7 @@ const Profile = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0 }}
-         className="bg-gray-700 grid grid-cols-2 mx-2 p-4">
+         className="bg-gray-700 grid grid-cols-1 md:grid-cols-2 mx-2 p-4">
           <CodeforceProfile />
           <LeetcodeProfile />
         </motion.div>
