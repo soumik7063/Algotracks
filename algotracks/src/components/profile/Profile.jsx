@@ -11,6 +11,7 @@ const Profile = () => {
   const [toggle, setToggle] = useState(false);
   const {isLoggedIn, checkLoginStatus,isLoading } = useContext(AuthContext);
   const handelToggle = async() => {
+     window.location.reload();
      try {
         setTimeout( async() => {
           await checkLoginStatus()

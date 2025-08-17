@@ -83,7 +83,7 @@ const Home = () => {
             </Link>
             <Link
               to="/contests"
-              className="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:bg-opacity-10 transition"
+              className="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold hover:text-gray-00 hover:bg-blue-500 hover:bg-opacity-10 transition"
             >
               Upcoming Contests
             </Link>
