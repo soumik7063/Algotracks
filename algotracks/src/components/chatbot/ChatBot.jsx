@@ -197,7 +197,7 @@ const ChatBot = () => {
 
             {/* Toggle Button */}
             <button
-                className="border p-3 bottom-5 right-5 bg-blue-600 hover:bg-blue-700 text-white rounded-full fixed shadow-lg transition-colors"
+                className="border p-3 bottom-5 right-5  bg-gradient-to-l from-[#833AB4] via-[#FD1D1D] to-[#FCB045] hover:bg-blue-700 text-white rounded-full fixed shadow-lg transition-colors"
                 onClick={() => setVisible(prev => !prev)}
             >
                 💬 Chat

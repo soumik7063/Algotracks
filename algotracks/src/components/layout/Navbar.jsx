@@ -145,6 +145,7 @@ const Navbar = () => {
               <Link
                 to="/signup"
                 className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Sign In
               </Link>
