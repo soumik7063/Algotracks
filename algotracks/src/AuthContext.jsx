@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("authToken");
     if (token) {
       try {
-        const response = await fetch("https://algotracks.onrender.com/auth/me", {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

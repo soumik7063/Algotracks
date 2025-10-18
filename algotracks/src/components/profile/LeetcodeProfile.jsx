@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from "../../AuthContext";
 import { Submission } from './Submission.jsx';
 import {Profilecontext} from './ProfileContext';
+import CP_ids from './CP_ids.jsx';
 
 const LeetcodeProfile = () => {
   const [displayCount,setDisplayCount] = useState(5)
@@ -9,7 +10,7 @@ const LeetcodeProfile = () => {
   const {leetcodeData,submissions,isLoading,handleSearch}  =  useContext(Profilecontext);
   const [solvedProblem, setSolvedProblem] = useState([]);
   const [error, setIserror] = useState('');
-
+  
   const handelShowMore = ()=>{
     setDisplayCount((prev)=>prev+5);
   }
@@ -62,6 +63,19 @@ const LeetcodeProfile = () => {
           <p className="font-bold">Error</p>
           <p>{error}</p>
         </div>
+      </div>
+    )
+  }
+  if(!leetcodeData){
+    return (
+      <div>
+       <div className='flex justify-center items-center h-20 flex-col'>
+         <p className='text-2xl font-bold text-gray-400'>Your Leetcode ID is not found</p>
+          <p className='text-xl font-semibold text-gray-300'>Please update it</p>
+       </div>
+       <div className='md:w-2xl mx-auto'>
+        <CP_ids platform="Leetcode"/>
+       </div>
       </div>
     )
   }

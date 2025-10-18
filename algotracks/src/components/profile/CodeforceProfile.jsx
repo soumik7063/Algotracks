@@ -3,6 +3,8 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { Profilecontext } from "./ProfileContext";
 import { Submission } from "./Submission";
+import UpdateProfile from "./UpdateProfile";
+import CP_ids from "./CP_ids";
 const verdict = {
   OK: "Accepted",
   WRONG_ANSWER: "Wrong answer",
@@ -16,7 +18,8 @@ const CodeforceProfile = () => {
   };
 
   const { codeforceData, isLoading, isError, CodeforceSubmission } =
-    useContext(Profilecontext);
+  useContext(Profilecontext);
+  console.log(!codeforceData)
   const getRatingColorClass = (rating) => {
     if (rating < 1200) return "bg-gray-500";
     if (rating < 1400) return "bg-green-500";
@@ -26,6 +29,19 @@ const CodeforceProfile = () => {
     if (rating < 2400) return "bg-orange-500";
     return "bg-red-500";
   };
+  if(!codeforceData){
+    return (
+      <div>
+       <div className='flex justify-center items-center h-20 flex-col'>
+         <p className='text-2xl font-bold text-gray-400'>Your Codeforce ID is not found</p>
+          <p className='text-xl font-semibold text-gray-300'>Please update it</p>
+       </div>
+       <div className='md:w-2xl mx-auto'>
+        <CP_ids platform="Leetcode"/>
+       </div>
+      </div>
+    )
+  }
   if (loading || isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -52,6 +68,7 @@ const CodeforceProfile = () => {
       </div>
     );
   }
+  
   if (isError) {
     return (
       <div className="flex justify-center items-center h-60">
@@ -62,6 +79,7 @@ const CodeforceProfile = () => {
       </div>
     );
   }
+  
   if (!isLoading && codeforceData) {
     return (
       <>

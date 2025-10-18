@@ -43,7 +43,7 @@ const AuthForm = () => {
     
     try {
       setloading(true);
-      const response = await fetch('https://algotracks.onrender.com/auth/signup', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ const AuthForm = () => {
     
     try {
       setloading(true);
-      const response = await fetch('https://algotracks.onrender.com/auth/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -110,6 +110,7 @@ const AuthForm = () => {
       } else {
         setErrorMsg(message || 'Login failed');
       }
+      
     } catch (error) {
       setErrorMsg('An error occurred. Please try again.');
       console.log(error);

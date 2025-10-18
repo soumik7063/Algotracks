@@ -38,7 +38,7 @@ const ChatBot = () => {
             setLoading(true)
             setError('')
             
-            const response = await fetch('https://algotracks.onrender.com/aichat', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/aichat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

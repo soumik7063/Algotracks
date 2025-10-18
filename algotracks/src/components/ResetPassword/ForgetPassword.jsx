@@ -19,7 +19,7 @@ const ForgetPassword = () => {
 
         try {
             setLoading(true);
-            const response = await fetch('https://algotracks.onrender.com/forget_password', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/forget_password`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

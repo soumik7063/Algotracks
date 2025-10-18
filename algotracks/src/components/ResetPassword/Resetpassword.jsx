@@ -29,7 +29,7 @@ const Resetpassword = () => {
 
         try {
             setLoading(true);
-            const response = await fetch('https://algotracks.onrender.com/reset_password?token=' + token, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/reset_password?token=` + token, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
