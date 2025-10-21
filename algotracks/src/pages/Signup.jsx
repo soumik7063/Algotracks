@@ -110,7 +110,7 @@ const AuthForm = () => {
       } else {
         setErrorMsg(message || 'Login failed');
       }
-      
+
     } catch (error) {
       setErrorMsg('An error occurred. Please try again.');
       console.log(error);

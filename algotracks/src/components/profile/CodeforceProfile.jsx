@@ -37,7 +37,7 @@ const CodeforceProfile = () => {
           <p className='text-xl font-semibold text-gray-300'>Please update it</p>
        </div>
        <div className='md:w-2xl mx-auto'>
-        <CP_ids platform="Leetcode"/>
+        <CP_ids platform="Codeforce"/>
        </div>
       </div>
     )

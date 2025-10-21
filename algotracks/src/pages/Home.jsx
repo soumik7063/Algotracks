@@ -1,25 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { fadeIn } from "../framer_motion/variant";
+import Feature from "./Feature";
+import HeroSection from "./HeroSection";
 
-const Benifits = ({ text }) => {
-  return (
-    <div
-      variants={fadeIn(`down`, 0.3)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: false, amount: 0 }}
-      className="bg-gray-900 p-6 rounded-lg shadow-md"
-    >
-      <div className="text-blue-600 text-4xl mb-4">🗓️</div>
-      <h3 className="text-xl font-semibold mb-3 text-white">
-        Contest Calendar
-      </h3>
-      <h1 className="text-gray-200">{text}</h1>
-    </div>
-  );
-};
 const Home = () => {
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState(null);
@@ -58,59 +40,8 @@ const Home = () => {
     <div 
     
     className="min-h-screen bg-gray-800 ">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-tr from-[#08275C] to-[#2B2B2B] text-white py-20 px-4 mt-5">
-        <motion.div 
-        variants={fadeIn(`down`, 0.3)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: false, amount: 0 }}
-        className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-6">
-            Track Your Competitive Programming Journey
-          </h1>
-          <p className="text-xl mb-8">
-            Your all-in-one platform for monitoring progress across Codeforces,
-            LeetCode, CodeChef, and more. Never miss a contest and keep all your
-            CP profiles in one place.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              to="/profile"
-              className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
-            >
-              View Your Dashboard
-            </Link>
-            <Link
-              to="/contests"
-              className="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold hover:text-gray-00 hover:bg-blue-500 hover:bg-opacity-10 transition"
-            >
-              Upcoming Contests
-            </Link>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 px-4">
-        <motion.div 
-        variants={fadeIn(`down`, 0.3)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: false, amount: 0 }}
-        className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-white">
-            Why Use Our Platform?
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <Benifits text="Track all your competitive programming profiles in one place. See your ratings, solved problems, and progress across platforms." />
-            <Benifits text="Never miss a coding contest again. Get a comprehensive calendar of upcoming contests from all major platforms." />
-            <Benifits text="Bookmark interesting contests and get reminders before they start. Organize your competitive programming schedule efficiently." />
-          </div>
-        </motion.div>
-      </section>
-
+      <HeroSection/>
+      <Feature/>
       {/* Codeforces Search Section */}
       <section className="py-16 px-4 bg-gray-700">
         <div className="max-w-4xl mx-auto">
