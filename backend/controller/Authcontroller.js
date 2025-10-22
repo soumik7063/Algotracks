@@ -19,7 +19,25 @@ export const signup = async(req,res)=>{
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
-    res.status(201).json({ message: "Sign up successfully", success: true });
+    const jwt_token = sign(
+      {
+        name: newUser.name,
+        email: newUser.email,
+        _id: newUser._id,
+      },
+      JWT_SECRET,
+      { expiresIn: "24h" }
+    );
+     res.status(201).json({
+      message: "Sign up successful",
+      success: true,
+      token: jwt_token,
+      user: {
+        name: newUser.name,
+        email: newUser.email,
+        cpProfiles: newUser.cpProfiles || {},
+      },
+    });
     } catch (error) {
       console.log("error: ",error)
     res.status(500).json({ message: "internal server error", success: false });
