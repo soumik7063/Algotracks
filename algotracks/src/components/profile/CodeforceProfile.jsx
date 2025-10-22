@@ -187,7 +187,7 @@ const CodeforceProfile = () => {
                   <Submission
                     key={idx}
                     title={item.problem.name}
-                    time={item.relativeTimeSeconds}
+                    time={item.creationTimeSeconds + item.relativeTimeSeconds}
                     status={verdict[item.verdict]}
                   />
                 );

@@ -52,12 +52,14 @@ const AuthForm = () => {
       });
       
       const res = await response.json();
-      const { message, success } = res;
+      const { message, success ,token} = res;
       
       if (success) {
+        localStorage.setItem("token", token);
         setSuccessMsg(message || 'Signup successful!');
+        login(res.user,res.token);
         setTimeout(() => {
-          setIsLogin(true)
+          navigate('/profile');
         }, 2000);
       } else {
         setErrorMsg(message || 'Signup failed');
