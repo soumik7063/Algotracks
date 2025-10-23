@@ -31,8 +31,7 @@ const App = () => {
           <ProtectedRoute>
             <Bookmark/>
           </ProtectedRoute>
-        }>
-        </Route>
+        }></Route>
         <Route path="/forget_password" element={<ForgetPassword/>}></Route>
         <Route path="/reset_password" element={<Resetpassword/>}></Route>
       </Routes>

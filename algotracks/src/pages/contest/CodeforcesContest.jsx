@@ -66,7 +66,7 @@ const CodeforcesContest = () => {
     try {
       setIsbookmarkLoading(true);
 
-      const response = await fetch("http://localhost:3000/bookmarks", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/bookmarks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

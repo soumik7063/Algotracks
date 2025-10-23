@@ -25,7 +25,7 @@ const CP_ids = ({ platform }) => {
     if (isEditable) {
       setIsSaving(true);
       try {
-        const response = await fetch("http://localhost:3000/auth/update", {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/update`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

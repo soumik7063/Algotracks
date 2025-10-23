@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import {motion} from 'framer-motion'
 import {fadeIn}  from '../../framer_motion/variant.js'
 const formateTime = (milliseconds) => {
-  const date = new Date(milliseconds * 1000);
+  const date = new Date(milliseconds*1000);
   return date.toLocaleTimeString();
 };
 
 const formateDate = (milliseconds) => {
-  const date = new Date(milliseconds * 1000);
+  const date = new Date(milliseconds*1000);
   return date.toLocaleDateString();
 };
 

@@ -1,9 +1,10 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import express from 'express';
 import cors from 'cors'
-import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
 // import {router as authrouter} from './routes/authrouter';
-
+import './config/config.js'
 import {authrouter} from './routes/authrouter.js'
 import { leetcodeRouter } from './routes/leetcodeRouter.js';
 import './models/database.js'
@@ -16,7 +17,6 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 app.use(cors({
   origin: [
     'https://algotracks-frontend-1.onrender.com',

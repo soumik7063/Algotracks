@@ -43,7 +43,7 @@ const AuthForm = () => {
     
     try {
       setloading(true);
-      const response = await fetch('http://localhost:3000/auth/signup', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -52,12 +52,14 @@ const AuthForm = () => {
       });
       
       const res = await response.json();
-      const { message, success } = res;
+      const { message, success ,token} = res;
       
       if (success) {
+        localStorage.setItem("token", token);
         setSuccessMsg(message || 'Signup successful!');
+        login(res.user,res.token);
         setTimeout(() => {
-          setIsLogin(true)
+          navigate('/profile');
         }, 2000);
       } else {
         setErrorMsg(message || 'Signup failed');
@@ -87,7 +89,7 @@ const AuthForm = () => {
     
     try {
       setloading(true);
-      const response = await fetch('http://localhost:3000/auth/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -110,6 +112,7 @@ const AuthForm = () => {
       } else {
         setErrorMsg(message || 'Login failed');
       }
+
     } catch (error) {
       setErrorMsg('An error occurred. Please try again.');
       console.log(error);

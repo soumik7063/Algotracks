@@ -1,7 +1,7 @@
 import {cookies} from "cookie-parser";
 import {jwt} from 'jsonwebtoken'
 import User from "../models/DBmodel";
-const JWT_SECRET = process.env.JWT_SECRET|| "1234567";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const auth = async (req,res, next)=>{
     try {

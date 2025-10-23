@@ -4,7 +4,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsloggedin] = useState(false);
-  const [user, setuser] = useState("");
+  const [user, setuser] = useState(null);
   const [isLoading, setisLoading] = useState(true);
 
   const checkLoginStatus = useCallback(async () => {
@@ -12,29 +12,32 @@ export const AuthProvider = ({ children }) => {
 
     const token = localStorage.getItem("authToken");
     if (token) {
-      try {
-        const response = await fetch("http://localhost:3000/auth/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-        const data = await response.json();
-        if (data.success) {
-          setuser(data.user);
-          setIsloggedin(true);
-        } else {
-          localStorage.removeItem("authToken");
-          setIsloggedin(false);
-        }
-      } catch (error) {
-        console.log("Error verifying authentication:", error);
-        localStorage.removeItem("authToken");
-        setIsloggedin(false);
-      }
+    const data = await response.json();
+
+    if (data?.success && data?.user) {
+      setuser(data.user);
+      setIsloggedin(true);
     } else {
+      localStorage.removeItem("authToken");
+      setuser(null);
       setIsloggedin(false);
     }
+  } catch (error) {
+    console.error("Auth verification failed:", error);
+    localStorage.removeItem("authToken");
+    setuser(null);
+    setIsloggedin(false);
+  }
+} else {
+  setuser(null);
+  setIsloggedin(false);
+}
+
 
     setisLoading(false);
   }, []);
@@ -54,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     setuser(null);
     setIsloggedin(false);
   };
-
+  
   return (
     <AuthContext.Provider
       value={{
