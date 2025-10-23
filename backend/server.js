@@ -11,6 +11,9 @@ import './models/database.js'
 import { updateBookmark } from './controller/BookmarkController.js';
 import { UserRouter } from './routes/UserRouter.js';
 import { AiRouter } from './routes/AiRouter.js';
+import { recomendRouter } from './routes/recomendRouter.js';
+
+dotenv.config()
 
 
 const app = express();
@@ -22,6 +25,7 @@ app.use(cors({
   ],
   credentials: true
 }));
+
 app.use(express.json())
 app.use(cookieParser())
 
@@ -30,6 +34,7 @@ app.use(cookieParser())
 app.use('/auth',authrouter)
 app.use('/leetcode',leetcodeRouter)
 app.use('/bookmarks',updateBookmark)
+app.use('/', recomendRouter);
 app.use('/',UserRouter)
 app.use('/',AiRouter)
 

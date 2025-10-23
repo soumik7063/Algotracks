@@ -2,7 +2,7 @@ import React, { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {AuthContext} from '../AuthContext.jsx'
 const AuthForm = () => {
-    const {login} = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   

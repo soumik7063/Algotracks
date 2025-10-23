@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import pkg from 'jsonwebtoken'
 import User from '../models/DBmodel.js'
 const JWT_SECRET = process.env.JWT_SECRET;
+console.log(JWT_SECRET);
 const {jwt,sign,verify} = pkg;
 console.log(User)
 export const signup = async(req,res)=>{

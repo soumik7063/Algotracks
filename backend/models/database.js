@@ -6,5 +6,3 @@ const mongoURI = "mongodb+srv://soumikghatak7063:83ClFwdmKwTEcikj@algotracks.uli
 mongoose.connect(mongoURI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ Connection failed:", err));
-
-
