@@ -58,7 +58,7 @@ const LeetcodeContest = () => {
     try { 
       setIsbookmarkLoading(true);
 
-      const response = await fetch("https://algotracks.onrender.com/bookmarks", {
+      const response = await fetch("http://localhost:3000/bookmarks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

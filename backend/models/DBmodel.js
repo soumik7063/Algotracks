@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema(
       Codechef: { type: String, default: "" },
       Atcoder: { type: String, default: "" },
     },
+    cfProblems: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

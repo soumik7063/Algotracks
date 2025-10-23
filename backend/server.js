@@ -10,6 +10,7 @@ import './models/database.js'
 import { updateBookmark } from './controller/BookmarkController.js';
 import { UserRouter } from './routes/UserRouter.js';
 import { AiRouter } from './routes/AiRouter.js';
+import { recomendRouter } from './routes/recomendRouter.js';
 dotenv.config()
 
 
@@ -31,6 +32,7 @@ app.use(cookieParser())
 app.use('/auth',authrouter)
 app.use('/leetcode',leetcodeRouter)
 app.use('/bookmarks',updateBookmark)
+app.use('/recomend', recomendRouter);
 app.use('/',UserRouter)
 app.use('/',AiRouter)
 

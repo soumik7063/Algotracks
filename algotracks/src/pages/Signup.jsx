@@ -2,7 +2,7 @@ import React, { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {AuthContext} from '../AuthContext.jsx'
 const AuthForm = () => {
-    const {login} = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   
@@ -43,7 +43,7 @@ const AuthForm = () => {
     
     try {
       setloading(true);
-      const response = await fetch('https://algotracks.onrender.com/auth/signup', {
+      const response = await fetch('http://localhost:3000/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ const AuthForm = () => {
     
     try {
       setloading(true);
-      const response = await fetch('https://algotracks.onrender.com/auth/login', {
+      const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

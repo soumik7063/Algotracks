@@ -19,7 +19,7 @@ const ForgetPassword = () => {
 
         try {
             setLoading(true);
-            const response = await fetch('https://algotracks.onrender.com/forget_password', {
+            const response = await fetch('http://localhost:3000/forget_password', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
