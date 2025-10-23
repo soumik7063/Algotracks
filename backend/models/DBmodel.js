@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema(
       Atcoder: { type: String, default: "" },
     },
     cfProblems: {
-      type: [String],
+      type: [Object],
       default: [],
     },
   },

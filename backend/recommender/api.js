@@ -19,17 +19,16 @@ class CodeforcesAPI {
     }
   }
 
-  // problems list with tags and ratings
   async getProblemset() {
     return await this._get('/problemset.problems');
   }
 
-  // user submissions (all recent)
+
   async getUserSubmissions(handle) {
     return await this._get('/user.status', { handle, from: 1, count: 100000 });
   }
 
-  // user info (rating)
+
   async getUserInfo(handle) {
     const res = await this._get('/user.info', { handles: handle });
     return Array.isArray(res) ? res[0] : res;

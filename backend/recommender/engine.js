@@ -1,4 +1,3 @@
-// Simple tag-based recommender + rating Gaussian
 const { sqrt, exp } = Math;
 
 function l2norm(arr) {
@@ -18,7 +17,6 @@ class RecommenderEngine {
     if (this.problemCache) return;
     const data = await this.cf.getProblemset();
     const problems = data.problems || [];
-    // build unique key and collect tags/rating
     const tagSet = new Set();
     const items = problems.map(p => {
       const key = (p.contestId ? p.contestId : '') + '/' + (p.index||'') ;
@@ -29,7 +27,6 @@ class RecommenderEngine {
     });
     const tagList = Array.from(tagSet).sort();
     const tagIndex = Object.fromEntries(tagList.map((t,i)=>[t,i]));
-    // build vectors
     for (const it of items) {
       const vec = new Array(tagList.length).fill(0);
       for (const t of it.tags) {
@@ -43,7 +40,6 @@ class RecommenderEngine {
   }
 
   _userProfileFromSolved(solvedKeys) {
-    // sum tag vectors of solved problems
     const dim = Object.keys(this.tagIndex).length;
     const prof = new Array(dim).fill(0);
     for (const p of this.problemCache) {
@@ -57,7 +53,6 @@ class RecommenderEngine {
   }
 
   _cosineSim(vecA, vecB, normB) {
-    // vecA is user profile (unit), vecB is problem tag vector
     if (!vecA || vecA.length===0) return 0;
     let dot = 0;
     for (let i=0;i<vecA.length;i++) dot += (vecA[i]||0) * (vecB[i]||0);
@@ -75,9 +70,7 @@ class RecommenderEngine {
 
   async recommend(handle, topN=50) {
     await this._buildProblemIndex();
-    // fetch user submissions
     const subs = await this.cf.getUserSubmissions(handle);
-    // determine solved problems (unique accepted verdicts)
     const solved = new Set();
     for (const s of subs) {
       if (s.verdict === 'OK' && s.problem) {
@@ -85,7 +78,6 @@ class RecommenderEngine {
         solved.add(key);
       }
     }
-    // user rating
     let userInfo = null;
     try {
       userInfo = await this.cf.getUserInfo(handle);
@@ -95,14 +87,13 @@ class RecommenderEngine {
     const userRating = userInfo && userInfo.rating ? userInfo.rating : null;
 
     const profile = this._userProfileFromSolved(solved);
-    // compute scores
-    const alpha = 0.6, beta = 0.0, gamma = 0.4; // beta=0 because popularity not available
+    const alpha = 0.6, beta = 0.0, gamma = 0.4; 
     const scored = [];
     for (const p of this.problemCache) {
       if (solved.has(p.key)) continue;
       const sim = profile.norm===0 ? 0 : this._cosineSim(profile.vec, p.tagVec, p.tagNorm);
       const diff = this._difficultyScore(p.rating, userRating);
-      const pop = 0; // unavailable from public API
+      const pop = 0; 
       const score = alpha * sim + beta * pop + gamma * diff;
       scored.push({ p, score, sim, diff });
     }
