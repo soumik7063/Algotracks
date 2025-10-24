@@ -20,18 +20,17 @@ export const recomend = async(req, res) =>{
     }else{
         const handle = user.cpProfiles.Codeforce;
         const recs = await engine.recommend(handle, 50);
+        if(!recs) res.status(403).json({ message: "Something went wrong , try again", success: false });
         const problems = Array.isArray(recs)
         ? recs.map(item => ({
             name: item.name,
             url: item.url,
-            tags: item.tags,
+            tags: item.tags.join(','),
             rating: item.rating
             }))
         : [];
-
         user.cfProblems = problems;    
         await user.save();   
-        console.log(user.cfProblems);
 
         res.status(200).json({success:true, problems: problems});
     }
@@ -50,15 +49,12 @@ export const newRecomend = async(req, res)=>{
         ? recs.map(item => ({
             name: item.name,
             url: item.url,
-            tags: item.tags,
+            tags: item.tags.join(','),
             rating: item.rating
             }))
         : [];
 
         user.cfProblems = problems;    
         await user.save();   
-        console.log(user.cfProblems);
-        console.log("break");
         res.status(200).json({success:true, problems: problems});
-    
 };
