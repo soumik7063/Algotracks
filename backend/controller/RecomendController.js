@@ -1,7 +1,6 @@
 import User from '../models/DBmodel.js'
-import { CodeforcesAPI } from '../../../codeforces_recommender_js/recommender/api.js';
-import { RecommenderEngine } from '../../../codeforces_recommender_js/recommender/engine.js';
-
+import  {CodeforcesAPI}  from '../recommender/api.js';
+import { RecommenderEngine } from '../recommender/engine.js'
 const cf = new CodeforcesAPI();
 const engine = new RecommenderEngine(cf);
 
@@ -11,10 +10,6 @@ export const recomend = async(req, res) =>{
     if (!user) {
         return res.status(403).json({ message: "user not found", success: false });
     }
-
-    // // const email = "debrajdalai29@gmail.com";
-    // // const user = await User.findOne({ email });
-    // // console.log(user._id);
 
     const problems = user.cfProblems;
     const length = Array.isArray(problems) ? problems.length : 0;

@@ -1,6 +1,5 @@
-const axios = require('axios');
-
-class CodeforcesAPI {
+import axios from 'axios';
+export  class CodeforcesAPI {
   constructor() {
     this.base = 'https://codeforces.com/api';
     this.cache = {};
@@ -35,4 +34,3 @@ class CodeforcesAPI {
   }
 }
 
-module.exports = { CodeforcesAPI };

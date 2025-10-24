@@ -6,7 +6,7 @@ function l2norm(arr) {
   return Math.sqrt(s);
 }
 
-class RecommenderEngine {
+export class RecommenderEngine {
   constructor(cfApi) {
     this.cf = cfApi;
     this.problemCache = null;
@@ -110,4 +110,3 @@ class RecommenderEngine {
   }
 }
 
-module.exports = { RecommenderEngine };
