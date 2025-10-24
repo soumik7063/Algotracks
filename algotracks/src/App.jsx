@@ -13,6 +13,7 @@ import Bookmark from "./components/bookmarks/Bookmark";
 import ForgetPassword from "./components/ResetPassword/ForgetPassword";
 import Resetpassword from "./components/ResetPassword/Resetpassword";
 import ChatBot from "./components/chatbot/ChatBot";
+import Recomend from "./components/recomend/Recomend";
 const App = () => {
   return (
     <div>
@@ -30,6 +31,11 @@ const App = () => {
         <Route path='/bookmarks' element={
           <ProtectedRoute>
             <Bookmark/>
+          </ProtectedRoute>
+        }></Route>
+        <Route path='/recomend' element={
+          <ProtectedRoute>
+            <Recomend/>
           </ProtectedRoute>
         }></Route>
         <Route path="/forget_password" element={<ForgetPassword/>}></Route>

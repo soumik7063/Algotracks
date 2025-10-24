@@ -38,7 +38,6 @@ const ContestDataContext = ({children}) => {
             setUpcomingContest(Upcontest);
           } catch (err) {
             setError("Failed to fetch contest data. Please try again later.");
-            console.error(err);
           } finally {
             setIsLoadingLeetcode(false);
           }
