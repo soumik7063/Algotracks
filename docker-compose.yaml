@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    networks:
+      - algotracks
+    environment:
+      - MONGO_URI=mongodb+srv://soumikghatak7063:83ClFwdmKwTEcikj@algotracks.ulibk4v.mongodb.net/  
+    depends_on:
+      - frontend
+
+  frontend:
+    build: ./algotracks
+    ports:
+      - "5173:5173"
+    networks:
+      - algotracks
+    environment:
+      - VITE_API_URL=http://localhost:3000  # backend endpoint (can change in prod)
+
+networks:
+  algotracks:
+    driver: bridge
