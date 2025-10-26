@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import pkg from 'jsonwebtoken'
 import User from '../models/DBmodel.js'
 const JWT_SECRET = process.env.JWT_SECRET;

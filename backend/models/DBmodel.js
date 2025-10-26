@@ -1,5 +1,5 @@
 import mongoose, { mongo } from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // const mongoURI = "mongodb+srv://ghataksoumik7063:NQQfSrObh8sJFM45@algotracks.79l0nt1.mongodb.net/?retryWrites=true&w=majority&appName=algotracks";
 

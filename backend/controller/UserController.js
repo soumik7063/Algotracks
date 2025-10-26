@@ -1,7 +1,7 @@
 import User from "../models/DBmodel.js";
 import nodemailer from 'nodemailer'
 import randomstring from 'randomstring'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 export const sendResetPasswordMail = async(name,email,token)=>{
     try {
         const transporter = nodemailer.createTransport({
