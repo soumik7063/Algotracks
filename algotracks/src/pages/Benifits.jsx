@@ -1,7 +1,7 @@
 import { fadeIn } from "../framer_motion/variant";
 
 
-const Benifits = ({heading, text }) => {
+const Benifits = ({heading, text ,logo}) => {
   return (
     <div
       variants={fadeIn(`down`, 0.3)}
@@ -10,7 +10,7 @@ const Benifits = ({heading, text }) => {
       viewport={{ once: false, amount: 0 }}
       className="bg-gray-900 p-6 rounded-lg shadow-md"
     >
-      <div className="text-blue-600 text-4xl mb-4">🗓️</div>
+      <div className="text-blue-600 text-4xl mb-4">{logo}</div>
       <h3 className="text-xl font-semibold mb-3 text-white">
         {heading}
       </h3>

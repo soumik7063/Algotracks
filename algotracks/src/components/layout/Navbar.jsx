@@ -49,6 +49,12 @@ const Navbar = () => {
               >
                 Bookmarks
               </Link>
+              <Link
+                to="/recomend"
+                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+              >
+                Recomendation
+              </Link>
             </div>
           </div>
 
@@ -138,6 +144,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Bookmarks
+            </Link>
+            <Link
+              to="/recomend"
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Recomendation
             </Link>
           </div>
           <div className="px-2 pt-2 pb-3">

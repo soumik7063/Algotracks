@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { FaBookmark } from "react-icons/fa";
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp * 1000);
@@ -115,7 +116,7 @@ const ContestCard = ({ contest, updateBookmark, isBookmarkLoading ,bookmarked}) 
                 color: bookmarked[contest.id] ? "#FFD700" : "#808080",
               }}
             >
-              ★
+              <FaBookmark/>
               {isBookmarkLoading ? (
                 <span className="text-base">saving... </span>
               ) : (
