@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {AuthContext} from '../AuthContext.jsx'
 const AuthForm = () => {
@@ -17,6 +17,13 @@ const AuthForm = () => {
     email: '',
     password: ''
   });
+  const [enbaleLogin , setIsenableLogin] = useState(false);
+  const [enbaleSignup , setIsenableSignup] = useState(false);
+  
+  useEffect(()=>{
+    setIsenableLogin(()=>loginInfo.email && loginInfo.password && loginInfo.password.length >= 5 && loginInfo.email.endsWith('@gmail.com')) 
+    setIsenableSignup(()=>signupInfo.email && signupInfo.password && signupInfo.password.length >= 5 && signupInfo.email.endsWith('@gmail.com'))
+  },[loginInfo,signupInfo])
   
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -169,6 +176,7 @@ const AuthForm = () => {
                 onChange={handleLoginChange}
                 type="email"
                 placeholder="your@gmail.com"
+                
               />
             </label>
             
@@ -185,7 +193,7 @@ const AuthForm = () => {
             </label>
             
             <button 
-              className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-2 rounded-md transition-colors"
+              className={`${!enbaleLogin ? "bg-gray-400":"bg-blue-500 hover:bg-blue-600"}  cursor-pointer text-white font-semibold py-2 rounded-md transition-colors`}
               type="submit"
             >
               {
@@ -236,7 +244,7 @@ const AuthForm = () => {
             </label>
             
             <button 
-              className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-2 rounded-md transition-colors"
+              className={`${!enbaleSignup ? "bg-gray-400 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"}  cursor-pointer text-white font-semibold py-2 rounded-md transition-colors`}
               type="submit"
             >
              {loading?'signing up...' :'signUp'}

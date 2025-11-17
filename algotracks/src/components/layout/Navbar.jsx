@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 
 const Navbar = () => {
@@ -17,7 +17,7 @@ const Navbar = () => {
           {/* Logo and site name */}
           <div className="flex-shrink-0 flex flex-row items-center">
             <Link to="/" className="font-bold text-xl flex gap-2 items-center">
-            <img className="h-10 w-10 " src="./logo.png" alt="" />
+              <img className="h-10 w-10 " src="./logo.png" alt="" />
               AlgoTracks
             </Link>
           </div>
@@ -25,36 +25,56 @@ const Navbar = () => {
           {/* Desktop menu */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
-              <Link
+              <NavLink
                 to="/"
-                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md text-sm font-medium ${
+                    isActive ? "text-blue-500" : "text-white"
+                  }`
+                }
               >
                 Home
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/profile"
-                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md text-sm font-medium ${
+                    isActive ? "text-blue-500" : "text-white"
+                  }`
+                }
               >
                 Profile
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/contests"
-                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md text-sm font-medium ${
+                    isActive ? "text-blue-500" : "text-white"
+                  }`
+                }
               >
                 Contests
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/bookmarks"
-                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md text-sm font-medium ${
+                    isActive ? "text-blue-500" : "text-white"
+                  }`
+                }
               >
                 Bookmarks
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/recomend"
-                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md text-sm font-medium ${
+                    isActive ? "text-blue-500" : "text-white"
+                  }`
+                }
               >
                 Recomendation
-              </Link>
+              </NavLink>
             </div>
           </div>
 
