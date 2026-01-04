@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 const ChatBot = () => {
     const [visible, setVisible] = useState(false)
     const [messages, setMessages] = useState([])
@@ -131,7 +132,7 @@ const ChatBot = () => {
                                             : 'bg-gray-100 text-gray-800 rounded-bl-sm'
                                     }`}
                                 >
-                                    <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                                    <p p className="text-sm whitespace-pre-wrap">{message.text}</p>
                                     <p className={`text-xs mt-1 ${
                                         message.sender === 'user' 
                                             ? 'text-blue-200' 
