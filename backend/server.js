@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({
   origin: [
     'https://algotracks-frontend-1.onrender.com',
-    'https://algotracks.vercel.app',
+    'https://algotracks-cp-helper.vercel.app',
     'http://localhost:5173' // for local development
   ],
   credentials: true
