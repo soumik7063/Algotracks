@@ -75,7 +75,6 @@ const Resetpassword = () => {
         const tokenFromUrl = urlParams.get('token');
         if (tokenFromUrl) {
             setToken(tokenFromUrl);
-            console.log("Captured Token:", tokenFromUrl);
         } else {
             setError("No token found in the URL. Please use the link from your email.");
         }

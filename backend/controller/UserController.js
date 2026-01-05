@@ -19,7 +19,7 @@ export const sendResetPasswordMail = async(name,email,token)=>{
             from:process.env.emailUser,
             to:email,
             subject:'Reset your password',
-            html:'<p> Hii '+name+' , please copy the link and <a href="https://algotracks-frontend-1.onrender.com/reset_password?token='+token+'"> reset your password '
+            html:'<p> Hii '+name+' , please copy the link and <a href="https://algotracks-cp-helper.vercel.app/reset_password?token='+token+'"> reset your password '
         }
         transporter.sendMail(mailOptions,function(error,info){
             if(error){

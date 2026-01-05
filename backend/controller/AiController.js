@@ -10,7 +10,6 @@ export const AiResponse = async (req, res) => {
       .json({ success: false, error: "Message is required" });
   }
 
-  // 🔹 SYSTEM INSTRUCTION (Very Important)
   const systemPrompt = `
 You are AlgoTracks AI, a coding helping bot.
 
