@@ -17,14 +17,18 @@ const Recomend = () => {
   const [problems, setProblems] = useState([]);
   const [CFid, setCFid] = useState("");
   const { codeforceData } =useContext(Profilecontext);
-  const _id = user._id;
   const rating = codeforceData?.rating;
   useEffect(() => {
     if (user && user.cpProfiles && user.cpProfiles["Codeforce"]) {
       setCFid(user.cpProfiles["Codeforce"]);
     }
   }, [user]);
-  const handelFetch = async ({ id }) => {
+  const handelFetch = async () => {
+    if(!user._id) {
+      setError("User not fetched properly , try again")
+      console.log(user._id)
+      return;
+    };
     try {
       setquesLoading(true);
       const res = await fetch(`${import.meta.env.VITE_API_URL}/recomend`, {
@@ -32,7 +36,7 @@ const Recomend = () => {
         headers: {
           "Content-Type": "application/json",
         }, 
-        body: JSON.stringify({ _id }),
+        body: JSON.stringify({ _id:user._id }),
       });
       const data = await res.json();
       if (data.success) {
@@ -41,11 +45,9 @@ const Recomend = () => {
         setIsError(true);
         setError(data.message);
       }
-      setquesLoading(false);
     } catch (error) {
       setIsError(true);
       setError(error.message);
-      setquesLoading(false);
     }finally{
       setquesLoading(false)
     }
@@ -78,7 +80,7 @@ return (
         <div className="bg-gradient-to-r from-gray-900 to-indigo-900 py-6 px-6">
           <h1 className="text-xl font-bold text-gray-200">Codeforce id: {CFid}</h1>
           <h1 className="font-semibold text-xl text-gray-200">Rating: {rating}</h1>
-          <button className="bg-blue-900 text-gray-100 py-2 px-3 rounded-md my-3 font-semibold cursor-pointer" onClick={() => handelFetch({ _id })}>
+          <button disabled={!user?._id || quesLoading} className="bg-blue-900 text-gray-100 py-2 px-3 rounded-md my-3 font-semibold cursor-pointer" onClick={handelFetch}>
             Recomend Questions
           </button>
           {quesLoading ? (
