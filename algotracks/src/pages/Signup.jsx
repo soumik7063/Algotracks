@@ -27,14 +27,16 @@ const AuthForm = () => {
         loginInfo.email &&
         loginInfo.password &&
         loginInfo.password.length >= 5 &&
-        loginInfo.email.endsWith("@gmail.com"),
+        validateEmail(loginInfo.email),
+      // loginInfo.email.endsWith("@gmail.com"),
     );
     setIsenableSignup(
       () =>
         signupInfo.email &&
         signupInfo.password &&
         signupInfo.password.length >= 5 &&
-        signupInfo.email.endsWith("@gmail.com"),
+        validateEmail(signupInfo.email),
+      // signupInfo.email.endsWith("@gmail.com"),
     );
   }, [loginInfo, signupInfo]);
 
@@ -50,7 +52,10 @@ const AuthForm = () => {
     const { name, value } = e.target;
     setLoginInfo({ ...loginInfo, [name]: value });
   };
-
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
@@ -203,7 +208,11 @@ const AuthForm = () => {
                 placeholder="your@gmail.com"
               />
             </label>
-
+            <span
+              className={`${loginInfo.email.length > 0 && !validateEmail(loginInfo.email) ? "block" : "hidden"} relative text-red-400 text-xs`}
+            >
+              <p className="absolute bottom-0 left-0">Invalid email format</p>
+            </span>
             <label className="flex flex-col">
               <span>Password:</span>
               <input
@@ -216,18 +225,20 @@ const AuthForm = () => {
               />
             </label>
 
+            <span
+              className={`${loginInfo.password.length > 0 && loginInfo.password.length < 5 ? "block" : "hidden"} relative text-red-400 text-xs`}
+            >
+              <p className="absolute bottom-0 left-0">
+                password length at least 5 characters
+              </p>
+            </span>
             <button
-              className={`${!enbaleLogin ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"} cursor-  text-white font-semibold py-2 rounded-md transition-colors`}
+              className={`${!enbaleLogin ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 cursor-pointer"}  text-white font-semibold py-2 rounded-md transition-colors`}
               type="submit"
               disabled={!enbaleLogin}
             >
               {loading ? "logging..." : "login"}
             </button>
-            <span
-              className={`${loginInfo.email.length > 0 && loginInfo.password.length > 0 && !enbaleLogin ? "block" : "hidden"} text-red-400 text-xs`}
-            >
-              password length at least 5 characters
-            </span>
           </form>
         ) : (
           // Signup Form
@@ -258,7 +269,11 @@ const AuthForm = () => {
                 placeholder="your@gmail.com"
               />
             </label>
-
+            <span
+              className={`${signupInfo.email.length > 0 && !validateEmail(signupInfo.email) ? "block" : "hidden"} relative text-red-400 text-xs`}
+            >
+              <p className="absolute bottom-0 left-0">Invalid email format</p>
+            </span>
             <label className="flex flex-col">
               <span>Password:</span>
               <input
@@ -270,19 +285,24 @@ const AuthForm = () => {
                 placeholder="*********"
               />
             </label>
-
+            <span
+              className={`${signupInfo.password.length > 0 && signupInfo.password.length < 5 ? "block" : "hidden"} relative text-red-400 text-xs`}
+            >
+              <p className="absolute bottom-0 left-0">
+                password length at least 5 characters
+              </p>
+            </span>
             <button
-              className={`${!enbaleSignup ? "bg-gray-400 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"}  cursor-pointer text-white font-semibold py-2 rounded-md transition-colors`}
+              className={`${
+                !enbaleSignup
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600 cursor-pointer"
+              } text-white font-semibold py-2 rounded-md transition-colors`}
               type="submit"
               disabled={!enbaleSignup}
             >
               {loading ? "signing up..." : "signUp"}
             </button>
-            <span
-              className={`${signupInfo.email.length > 0 && signupInfo.password.length > 0 && !enbaleSignup ? "block" : "hidden"} text-red-400 text-xs`}
-            >
-              password length at least 5 characters
-            </span>
           </form>
         )}
 
