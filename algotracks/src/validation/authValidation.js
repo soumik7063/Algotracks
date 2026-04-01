@@ -1,4 +1,4 @@
-import {email, z} from 'zod'
+import { z} from 'zod'
 
 const registerSchema = z.object({
     name: z

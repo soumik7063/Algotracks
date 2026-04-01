@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +25,9 @@
     "node-fetch": "^3.3.2",
     "nodemailer": "^7.0.5",
     "randomstring": "^1.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11",
+    "save": "^2.9.0"
   }
 }

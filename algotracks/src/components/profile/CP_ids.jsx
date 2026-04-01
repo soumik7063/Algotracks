@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../AuthContext";
-
+import { SiLeetcode } from "react-icons/si";
+import { SiCodeforces } from "react-icons/si";
 const CP_ids = ({ platform }) => {
   const { isLoggedIn, user, loading } = useContext(AuthContext);
   const [platformId, setPlatformId] = useState("");
@@ -104,10 +105,14 @@ const CP_ids = ({ platform }) => {
   };
 
   return (
-    <div className="mb-6 transition-all duration-300 transform hover:scale-[1.01]">
+    <div className="mb-6 transition-all duration-300 transform hover:scale-[1.01] w-fit px-4 mx-auto">
       <div className={`bg-white rounded-lg shadow-md overflow-hidden border border-gray-100`}>
-        <div className={`bg-gradient-to-r ${getPlatformColor()} px-4 py-3 flex items-center`}>
-          <span className="text-xl mr-2">{getPlatformIcon()}</span>
+        <div className={`bg-gradient-to-r from-indigo-900 to-indigo-600 px-4 py-3 flex items-center`}>
+          {/* <span className="text-xl mr-2">{getPlatformIcon()}</span> */}
+          <div className="text-xl mr-2">
+            {platform === "Leetcode" && <SiLeetcode className="text-yellow-300" />}
+            {platform === "Codeforce" && <SiCodeforces className="text-blue-300" />}
+          </div>
           <h3 className="text-white font-medium">{platform} ID</h3>
         </div>
         

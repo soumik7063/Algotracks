@@ -136,7 +136,7 @@ const Navbar = () => {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="bg-gray-800 flex flex-col items-center  px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link
               to="/"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"

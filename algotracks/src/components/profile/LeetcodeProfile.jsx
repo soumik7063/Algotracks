@@ -29,6 +29,19 @@ const LeetcodeProfile = () => {
       setSolvedProblem(leetcodeData.submitStats.acSubmissionNum);
     }
   }, [leetcodeData]);
+  if(!leetcodeData){
+    return (
+      <div>
+       <div className='flex justify-center items-center h-20 flex-col'>
+         <p className='text-2xl font-bold text-gray-400'>Your Leetcode ID is not found</p>
+          <p className='text-xl font-semibold text-gray-300'>Please update it</p>
+       </div>
+       <div className='md:w-2xl mx-auto'>
+        <CP_ids platform="Leetcode"/>
+       </div>
+      </div>
+    )
+  }
   if (loading || isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -66,19 +79,7 @@ const LeetcodeProfile = () => {
       </div>
     )
   }
-  if(!leetcodeData){
-    return (
-      <div>
-       <div className='flex justify-center items-center h-20 flex-col'>
-         <p className='text-2xl font-bold text-gray-400'>Your Leetcode ID is not found</p>
-          <p className='text-xl font-semibold text-gray-300'>Please update it</p>
-       </div>
-       <div className='md:w-2xl mx-auto'>
-        <CP_ids platform="Leetcode"/>
-       </div>
-      </div>
-    )
-  }
+  
   if (!isLoading && leetcodeData) {
     return (
       <div className="container max-w-[1200px] mx-auto px-4 py-8">

@@ -60,14 +60,7 @@ const AuthForm = () => {
     e.preventDefault();
     setErrorMsg("");
     setSuccessMsg("");
-    const { data, error } = registerSchema.safeParse(signupInfo);
-    if (error) {
-      console.log(error);
-      console.log(error?.[0]);
-      console.log(typeof error?.[0]);
 
-      return;
-    }
     const { name, email, password } = signupInfo;
     if (!name || !email || !password) {
       return setErrorMsg("Username, email, and password are required");

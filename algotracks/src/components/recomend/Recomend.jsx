@@ -60,7 +60,7 @@ const Recomend = () => {
   }
 return (
   <div className="mt-16 bg-gray-900"> 
-    <div className="bg-white max-w-[1280px] rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300  mx-auto">
+    <div className="bg-white max-w-7xl rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300  mx-auto">
       {!CFid && (
         <div>
           <div className="flex justify-center items-center h-20 flex-col">
@@ -77,7 +77,7 @@ return (
         </div>
       )}
       {CFid && (
-        <div className="bg-gradient-to-r from-gray-900 to-indigo-900 py-6 px-6">
+        <div className="bg-linear-to-r from-gray-900 to-indigo-900 py-6 px-6">
           <h1 className="text-xl font-bold text-gray-200">Codeforce id: {CFid}</h1>
           <h1 className="font-semibold text-xl text-gray-200">Rating: {rating}</h1>
           <button disabled={!user?._id || quesLoading} className="bg-blue-900 text-gray-100 py-2 px-3 rounded-md my-3 font-semibold cursor-pointer" onClick={handelFetch}>

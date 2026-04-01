@@ -3,6 +3,8 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { Profilecontext } from "./ProfileContext";
 import { Submission } from "./Submission";
+import { SiCodeforces } from "react-icons/si";
+
 import UpdateProfile from "./UpdateProfile";
 import CP_ids from "./CP_ids";
 const verdict = {
@@ -20,6 +22,39 @@ const CodeforceProfile = () => {
   const { codeforceData, isLoading, isError, CodeforceSubmission } =
   useContext(Profilecontext);
   console.log(!codeforceData)
+  const getRankColorClass = (rank) => {
+  switch (rank?.toLowerCase()) {
+    case "newbie":
+      return "text-gray-500";
+
+    case "pupil":
+      return "text-green-500";
+
+    case "specialist":
+      return "text-cyan-500";
+
+    case "expert":
+      return "text-blue-500";
+
+    case "candidate master":
+      return "text-purple-500";
+
+    case "master":
+      return "text-orange-500";
+    case "international master":
+      return "text-orange-600";
+
+    case "grandmaster":
+      return "text-red-500";
+
+    case "international grandmaster":
+    case "legendary grandmaster":
+      return "text-red-700";
+
+    default:
+      return "text-gray-400";
+  }
+};
   const getRatingColorClass = (rating) => {
     if (rating < 1200) return "bg-gray-500";
     if (rating < 1400) return "bg-green-500";
@@ -86,7 +121,7 @@ const CodeforceProfile = () => {
         <div className="mt-5">
           <div className="bg-white max-w-[1180px] rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300  mx-auto">
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/3 bg-gradient-to-br from-blue-500 to-purple-600 p-6 flex items-center justify-center">
+              <div className="md:w-1/3 bg-gradient-to-br from-blue-900 to-neutral-900 p-6 flex items-center justify-center">
                 <div className="rounded-full border-4 border-white shadow-md overflow-hidden w-48 h-48 md:w-40 md:h-40 lg:w-48 lg:h-48">
                   <img
                     src={codeforceData.titlePhoto}
@@ -98,10 +133,13 @@ const CodeforceProfile = () => {
 
               <div className="md:w-2/3 p-6 md:p-8">
                 <div className="flex items-center mb-4">
+                    <div className="flex gap-2 items-center">
+                      <SiCodeforces className="inline-block w-8 h-8 mr-2 text-blue-500" />
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
                     Codeforces Profile
                   </h1>
-                  <div className="ml-auto text-2xl bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-semibold">
+                    </div>
+                  <div className={`ml-auto text-2xl ${getRankColorClass(codeforceData?.maxRank)} px-3 py-1 rounded-full font-semibold`}>
                     {(codeforceData &&
                       codeforceData.maxRank &&
                       codeforceData.maxRank) ||
