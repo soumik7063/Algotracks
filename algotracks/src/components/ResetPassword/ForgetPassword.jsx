@@ -30,8 +30,8 @@ const ForgetPassword = () => {
             });
 
             const data = await response.json();
-
-            if (!response.ok) { 
+            console.log(data)
+            if (!data.ok) { 
                 setError(data.msg || 'Failed to send reset email. Please try again.');
                 setShowMsg('');
             } else {

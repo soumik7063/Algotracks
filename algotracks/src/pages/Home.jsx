@@ -43,7 +43,8 @@ const Home = () => {
       <HeroSection/>
       <Feature/>
       {/* Codeforces Search Section */}
-      <section className="py-16 px-4 bg-gray-700">
+      <section className="py-16 px-4 bg-[#050d1a]">
+        
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-6 text-gray-200">
             Quick Codeforces Lookup

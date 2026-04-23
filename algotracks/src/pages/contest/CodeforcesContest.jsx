@@ -96,7 +96,7 @@ const CodeforcesContest = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-4 transform transition-transform duration-200 hover:scale-105">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-4 transform transition-transform duration-200">
         {/* Header */}
         <div className="bg-gradient-to-r from-gray-900 to-indigo-800 py-6 px-6">
           <h1 className="text-white text-2xl md:text-3xl font-bold text-center">

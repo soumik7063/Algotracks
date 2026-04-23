@@ -21,6 +21,7 @@ const Contest = () => {
   const[activeTab,setActiveTab] = useState('Codeforces');
   return (
     <div className='mt-17 bg-gray-900'>
+        
       <div className="tabs flex rounded-2xl shadow-sm overflow-hidden">
                         {
                             platforms.map((platform) => (

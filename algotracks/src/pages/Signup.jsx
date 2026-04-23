@@ -162,9 +162,22 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className=" relative overflow-hidden flex justify-center items-center h-screen  bg-[#050d1a] text-gray-500">
+      <div className="absolute top-[-80px] left-[-80px] w-[420px] h-[420px] rounded-full bg-blue-600 opacity-10 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-60px] right-[-60px] w-[360px] h-[360px] rounded-full bg-indigo-500 opacity-10 blur-[100px] pointer-events-none" />
+
+      {/* Subtle grid overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+        }}
+      />
+
       <div className="max-w-md w-full border rounded-2xl shadow-lg">
-        <h2 className="text-2xl text-center font-semibold bg-blue-500 py-3 rounded-t-2xl text-white">
+        <h2 className="text-2xl text-center font-semibold bg-linear-135 from-[#2563eb] to-[#4f46e5] bg-[#050d1a]/40 py-3 rounded-t-2xl text-white">
           {isLogin ? "Welcome Back" : "Create your account"}
         </h2>
 
